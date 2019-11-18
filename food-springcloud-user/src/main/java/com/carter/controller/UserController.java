@@ -49,7 +49,6 @@ public class UserController {
     @RequestMapping(value = "/info",method = RequestMethod.GET)
     public ResponseBo selUserInfoByName(@RequestHeader(value = "X-token") String token){
         try {
-            //判断token是否过期
             //获取token中username
             String username = JWTUtil.getUsername(token);
             Map<String, Object> userInfo = userServiceImpl.selUserInfoByName(username);

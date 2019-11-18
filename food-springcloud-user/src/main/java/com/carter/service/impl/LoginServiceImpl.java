@@ -6,6 +6,7 @@ import com.carter.service.LoginService;
 import com.carter.service.UserService;
 import com.carter.utils.JWTUtil;
 import com.carter.utils.RedisUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,16 +61,19 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseBo logout(String token) {
+        if (StringUtils.isBlank(token)){
+            return ResponseBo.success(200,"注销成功","");
+        }
         try {
             int index = redisUtil.remove(token);
             if (index>0){
                 return ResponseBo.success(200,"注销成功","");
             }else{
-                return ResponseBo.success(200,"token已失效","");
+                return ResponseBo.success(200,"token已失效,注销成功","");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseBo.error(500,"注销失败,可能原因:token已过期,请重新登录");
+        return ResponseBo.error(500,"注销失败,可能原因:服务器繁忙!!!");
     }
 }
