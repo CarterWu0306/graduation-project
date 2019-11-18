@@ -6,6 +6,7 @@ import com.carter.pojo.User;
 import com.carter.pojo.UserExample;
 import com.carter.pojo.UserRole;
 import com.carter.service.UserService;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(propagation= Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
 
     @Resource
@@ -38,6 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int addUser(User user, String userType) {
         int index = userMapper.insertSelective(user);
         //新增用户-角色关系
@@ -49,6 +51,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int updUser(User user) {
         int index = userMapper.updateByPrimaryKeySelective(user);
         return index;

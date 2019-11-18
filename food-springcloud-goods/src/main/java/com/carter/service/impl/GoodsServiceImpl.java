@@ -5,6 +5,7 @@ import com.carter.mapper.GoodsMapper;
 import com.carter.pojo.Goods;
 import com.carter.pojo.GoodsExample;
 import com.carter.service.GoodsService;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -22,24 +23,32 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper goodsMapper;
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int addGoods(Goods goods) {
         int index = goodsMapper.insertSelective(goods);
         return index;
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int updateGoods(Goods goods) {
         int index = goodsMapper.updateByPrimaryKey(goods);
         return index;
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int changeGoodsStatus(Goods goods) {
         int index = goodsMapper.updateByPrimaryKeySelective(goods);
         return index;
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int deleteGoods(int goodsId) {
         int index = goodsMapper.deleteByPrimaryKey(goodsId);
         return index;
