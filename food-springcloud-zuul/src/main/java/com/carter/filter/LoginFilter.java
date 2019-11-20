@@ -3,6 +3,7 @@ package com.carter.filter;
 import com.alibaba.fastjson.JSON;
 import com.carter.common.ResponseBo;
 import com.carter.utils.JWTUtil;
+import com.carter.utils.RedisUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
@@ -23,6 +26,9 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 public class LoginFilter extends ZuulFilter {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 过滤器类型
@@ -79,8 +85,8 @@ public class LoginFilter extends ZuulFilter {
             token = request.getParameter("X-token");
         }*/
         System.out.println("页面传来的token值为：" + token);
-        //登录校验逻辑  如果token为null,或者jwt不合法(过期,被篡改等),则直接返回客户端，而不进行下一步接口调用
-        if (StringUtils.isBlank(token)||!JWTUtil.verify(token)) {
+        //登录校验逻辑  如果token为null,则直接返回客户端，而不进行下一步接口调用
+        if (StringUtils.isBlank(token)) {
             // 过滤该请求，不对其进行路由
             requestContext.setSendZuulResponse(false);
             //返回错误代码
@@ -93,7 +99,7 @@ public class LoginFilter extends ZuulFilter {
             requestContext.setResponseBody(body);
         }else{
             //从Redis校验token是否有效
-            //如果过期
+            //如果token过期
             if (stringRedisTemplate.getExpire(token)<=0){
                 System.out.println("token过期");
                 // 过滤该请求，不对其进行路由
@@ -106,6 +112,9 @@ public class LoginFilter extends ZuulFilter {
                 //设置响应体内容
                 String body = JSON.toJSONString(ResponseBo.error(401,"登录信息已失效,请重新登录"));
                 requestContext.setResponseBody(body);
+            }else{
+                //如果token有效,刷新token有效时间
+                redisUtil.expire(token, JWTUtil.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
             }
         }
         return null;
