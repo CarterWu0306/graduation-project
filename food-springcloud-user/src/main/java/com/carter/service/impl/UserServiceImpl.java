@@ -5,12 +5,12 @@ import com.carter.mapper.UserRoleMapper;
 import com.carter.pojo.User;
 import com.carter.pojo.UserExample;
 import com.carter.pojo.UserRole;
+import com.carter.pojo.UserRoleExample;
 import com.carter.service.UserService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -40,6 +40,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User selUserById(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        return user;
+    }
+
+    @Override
     public PageInfo<Map<String, Object>> getUserList(int page, int limit, Map<String, Object> map) {
         PageHelper.startPage(page,limit);
 
@@ -59,11 +65,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int addUser(User user, String userType) {
+    public int addUser(User user, Integer userType) {
         int index = userMapper.insertSelective(user);
+
         //新增用户-角色关系
         UserRole userRole = new UserRole();
-        userRole.setRoleId(Integer.parseInt(userType));
+        userRole.setRoleId(userType);
         userRole.setUserId(user.getUserId());
         index += userRoleMapper.insertSelective(userRole);
         return index;
@@ -72,7 +79,32 @@ public class UserServiceImpl implements UserService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int updUser(User user) {
+    public int updUser(User user, Integer userType) {
+        int index = userMapper.updateByPrimaryKeySelective(user);
+        if (userType != -1){
+            UserRoleExample userRoleExample = new UserRoleExample();
+            UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+
+            criteria.andUserIdEqualTo(user.getUserId());
+            List<UserRole> userRoles = userRoleMapper.selectByExample(userRoleExample);
+
+            //修改用户-角色关系
+            UserRole userRole = userRoles.get(0);
+            userRole.setRoleId(userType);
+
+            index += userRoleMapper.updateByPrimaryKeySelective(userRole);
+        }
+        return index;
+    }
+
+    @Override
+    public int delUser(Integer userId) {
+        int index = userMapper.deleteByPrimaryKey(userId);
+        return index;
+    }
+
+    @Override
+    public int changePwd(User user) {
         int index = userMapper.updateByPrimaryKeySelective(user);
         return index;
     }

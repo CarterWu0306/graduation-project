@@ -1,5 +1,7 @@
 package com.carter.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.carter.common.ResponseBo;
 import com.carter.pojo.User;
 import com.carter.service.ImageService;
@@ -7,6 +9,7 @@ import com.carter.service.UserService;
 import com.carter.utils.JWTUtil;
 import com.carter.utils.MD5Util;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +39,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
-    public ResponseBo addUser(User user, @RequestParam(value = "userType") String userType){
+    public ResponseBo addUser(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userType = (Integer)jsonObject.get("userType");
+        User user = JSONObject.parseObject(data, User.class);
+        if (StringUtils.isBlank(user.getAvatar())){
+            user.setAvatar("http://images.wukate.com/defaultUser.jpg");
+        }
         try {
             //检查用户是否存在
             User checkUser = userServiceImpl.selUser(user.getUsername());
@@ -44,17 +53,58 @@ public class UserController {
                 //密码加密
                 user.setPassword(MD5Util.encrypByMd5(user.getPassword()));
                 int index = userServiceImpl.addUser(user,userType);
-
-                if (index>1){
-                    return ResponseBo.success(200,"新增用户成功","");
-                }
+                return ResponseBo.success(200,"新增用户成功","");
             }else{
                 return ResponseBo.error(200,"用户名已存在");
             }
         } catch (Exception e) {
             return ResponseBo.error(500,"新增用户失败");
         }
-        return ResponseBo.error(500,"新增用户失败");
+    }
+
+    @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
+    public ResponseBo updateUser(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userType = (Integer)jsonObject.get("userType");
+        User user = JSONObject.parseObject(data, User.class);
+        if (StringUtils.isBlank(user.getAvatar())){
+            user.setAvatar("http://images.wukate.com/defaultUser.jpg");
+        }
+        try {
+            //检查用户是否存在
+            User oldUser = userServiceImpl.selUserById(user.getUserId());
+            User checkUser = userServiceImpl.selUser(user.getUsername());
+            if (checkUser==null || oldUser.getUsername().equals(user.getUsername())){
+                userServiceImpl.updUser(user,userType);
+                return ResponseBo.success(200,"修改用户成功","");
+            }else{
+                return ResponseBo.error(200,"用户名已存在");
+            }
+        } catch (Exception e) {
+            return ResponseBo.error(500,"修改用户失败");
+        }
+    }
+
+    @RequestMapping(value = "/deleteUser",method = RequestMethod.GET)
+    public ResponseBo deleteUser(Integer userId){
+        try {
+            userServiceImpl.delUser(userId);
+            return ResponseBo.success(200,"删除用户成功","");
+        } catch (Exception e) {
+            return ResponseBo.success(500,"删除用户失败","");
+        }
+    }
+
+    @RequestMapping(value = "/changePwd",method = RequestMethod.POST)
+    public ResponseBo changePwd(@RequestBody User user){
+        try {
+            //密码加密
+            user.setPassword(MD5Util.encrypByMd5(user.getPassword()));
+            userServiceImpl.changePwd(user);
+            return ResponseBo.success(200,"修改密码成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"修改密码失败");
+        }
     }
 
     @RequestMapping(value = "/info",method = RequestMethod.GET)

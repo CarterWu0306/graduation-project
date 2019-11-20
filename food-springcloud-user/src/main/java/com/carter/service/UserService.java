@@ -8,11 +8,17 @@ import java.util.Map;
 public interface UserService {
     User selUser(String username);
 
+    User selUserById(Integer userId);
+
     PageInfo<Map<String, Object>> getUserList(int page, int limit, Map<String, Object> map);
 
-    int addUser(User user, String userType);
+    int addUser(User user, Integer userType);
 
-    int updUser(User user);
+    int updUser(User user, Integer userType);
+
+    int delUser(Integer userId);
+
+    int changePwd(User user);
 
     Map<String, Object> selUserInfoByName(String username);
 }

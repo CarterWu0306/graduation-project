@@ -47,7 +47,7 @@ public class LoginServiceImpl implements LoginService {
 
                 //修改用户最后登录时间
                 selUser.setLastLoginTime(new Date());
-                index += userServiceImpl.updUser(selUser);
+                index += userServiceImpl.updUser(selUser,-1);
 
                 if (index>3){
                     return ResponseBo.success(200,"登录成功",map);
