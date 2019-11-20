@@ -55,7 +55,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseBo selGoodsListByParam(int page, int limit, Map<String, Object> map) {
+    public PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map) {
         PageHelper.startPage(page,limit);
 
         GoodsExample goodsExample = new GoodsExample();
@@ -82,6 +82,6 @@ public class GoodsServiceImpl implements GoodsService {
         //设置分页条件
         PageInfo<Goods> pi = new PageInfo<>(goodsList);
 
-        return ResponseBo.list(200,"查询商品列表成功",pi.getTotal(),pi.getList());
+        return pi;
     }
 }

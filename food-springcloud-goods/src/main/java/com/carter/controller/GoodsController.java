@@ -5,6 +5,7 @@ import com.carter.common.ResponseBo;
 import com.carter.pojo.Goods;
 import com.carter.service.GoodsService;
 import com.carter.service.ImageService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,7 +108,12 @@ public class GoodsController {
 
     @RequestMapping(value = "/selGoodsList",method = RequestMethod.GET)
     public ResponseBo selGoodsListByParam(int page, int limit, @RequestParam Map<String, Object> map){
-        ResponseBo responseBo = goodsServiceImpl.selGoodsListByParam(page, limit, map);
-        return responseBo;
+        try {
+            PageInfo<Goods> pi = goodsServiceImpl.selGoodsListByParam(page, limit, map);
+            ResponseBo.list(200,"查询商品列表成功",pi.getTotal(),pi.getList());
+        } catch (Exception e) {
+            ResponseBo.error(500,"查询商品列表失败");
+        }
+        return ResponseBo.error(500,"查询商品列表失败");
     }
 }

@@ -2,6 +2,7 @@ package com.carter.service;
 
 import com.carter.common.ResponseBo;
 import com.carter.pojo.Goods;
+import com.github.pagehelper.PageInfo;
 
 import java.util.Map;
 
@@ -14,5 +15,5 @@ public interface GoodsService {
 
     int deleteGoods(int goodsId);
 
-    ResponseBo selGoodsListByParam(int page, int limit, Map<String, Object> map);
+    PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map);
 }
