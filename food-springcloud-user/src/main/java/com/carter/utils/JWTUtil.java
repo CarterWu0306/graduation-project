@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class JWTUtil {
     public static final String SECRET_KEY = "123456"; //秘钥
-    public static final int TOKEN_EXPIRE_TIME = 30 * 60 * 1000; //token过期时间(毫秒)
+    public static final int TOKEN_EXPIRE_TIME = 30 * 60 * 1000; //token过期时间(毫秒)   30分钟
     public static final int REFRESH_TOKEN_EXPIRE_TIME = 60 * 60 * 1000; //refreshToken过期时间(毫秒)
     private static final String ISSUER = "issuer"; //签发人
 

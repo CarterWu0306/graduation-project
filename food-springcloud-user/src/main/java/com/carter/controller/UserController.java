@@ -6,6 +6,7 @@ import com.carter.service.ImageService;
 import com.carter.service.UserService;
 import com.carter.utils.JWTUtil;
 import com.carter.utils.MD5Util;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,16 @@ public class UserController {
 
     @Autowired
     private ImageService imageServiceImpl;
+
+    @RequestMapping(value = "/getUserList",method = RequestMethod.GET)
+    public ResponseBo getUserList(int page, int limit, @RequestParam Map<String, Object> map){
+        try {
+            PageInfo<Map<String, Object>> pi = userServiceImpl.getUserList(page, limit, map);
+            return ResponseBo.list(200,"查询用户列表成功",pi.getTotal(),pi.getList());
+        } catch (Exception e) {
+            return ResponseBo.error(500,"查询用户失败");
+        }
+    }
 
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
     public ResponseBo addUser(User user, @RequestParam(value = "userType") String userType){

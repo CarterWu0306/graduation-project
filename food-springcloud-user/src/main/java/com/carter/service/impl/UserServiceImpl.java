@@ -7,6 +7,8 @@ import com.carter.pojo.UserExample;
 import com.carter.pojo.UserRole;
 import com.carter.service.UserService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,23 @@ public class UserServiceImpl implements UserService {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public PageInfo<Map<String, Object>> getUserList(int page, int limit, Map<String, Object> map) {
+        PageHelper.startPage(page,limit);
+
+        String realName = (String)map.get("realName");
+        String userPhone = (String)map.get("userPhone");
+        String userType = (String)map.get("userType");
+
+        List<Map<String, Object>> userList = userMapper.getUserList(realName, userPhone, userType);
+
+        //分页代码
+        //设置分页条件
+        PageInfo<Map<String, Object>> pi = new PageInfo<>(userList);
+
+        return pi;
     }
 
     @Override

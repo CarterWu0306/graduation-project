@@ -32,6 +32,41 @@
     where user.username = #{username}
   </select>
 
+  <resultMap id="BaseResultList" type="java.util.Map" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="CHAR" />
+    <result column="user_type" property="userType" jdbcType="TINYINT" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="CHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_score" property="userScore" jdbcType="INTEGER" />
+    <result column="last_ip" property="lastIp" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getUserList" resultMap="BaseResultList" parameterType="java.lang.String">
+    select a.*,c.role_id,c.role_name
+    from user a
+    left join user_role b on b.user_id = a.user_id
+    left join role c on c.role_id = b.role_id
+    <if test="realName != null and realName !=''">
+        and a.real_name = #{realName}
+    </if>
+    <if test="userPhone != null and userPhone !=''">
+        and a.user_phone = #{userPhone}
+    </if>
+    <if test="userType != null and userType !=''">
+        and c.role_id = #{userType}
+    </if>
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.User" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />

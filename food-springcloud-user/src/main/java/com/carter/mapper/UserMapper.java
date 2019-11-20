@@ -24,6 +24,8 @@ public interface UserMapper {
 
     Map<String, Object> selUserInfoByName(String username);
 
+    List<Map<String, Object>> getUserList(@Param("realName") String realName,@Param("userPhone") String userPhone,@Param("userType") String userType);
+
     int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
     int updateByExample(@Param("record") User record, @Param("example") UserExample example);
