@@ -41,7 +41,7 @@ public class UserController {
                 return ResponseBo.error(200,"用户名已存在");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"新增用户失败");
         }
         return ResponseBo.error(500,"新增用户失败");
     }
@@ -54,9 +54,8 @@ public class UserController {
             Map<String, Object> userInfo = userServiceImpl.selUserInfoByName(username);
             return ResponseBo.success(200,"拉取用户信息成功",userInfo);
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"拉取用户信息失败");
         }
-        return ResponseBo.error(500,"拉取用户信息失败");
     }
 
     @RequestMapping(value = "/uploadUserImage",method = RequestMethod.POST)
@@ -67,7 +66,7 @@ public class UserController {
                 return ResponseBo.success(200,"上传成功",uploadResult);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"上传失败");
         }
         return ResponseBo.error(500,"上传失败");
     }

@@ -31,7 +31,7 @@ public class GoodsController {
                 return ResponseBo.success(200,"新增商品成功","");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"新增商品失败");
         }
         return ResponseBo.error(500,"新增商品失败");
     }
@@ -45,7 +45,7 @@ public class GoodsController {
                 return ResponseBo.success(200,"编辑商品成功","");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"编辑商品失败");
         }
         return ResponseBo.error(500,"编辑商品失败");
     }
@@ -63,7 +63,7 @@ public class GoodsController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"上/下架商品失败");
         }
         return ResponseBo.error(500,"上/下架商品失败");
     }
@@ -76,7 +76,7 @@ public class GoodsController {
                 return ResponseBo.success(200,"删除商品成功","");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"删除商品失败");
         }
         return ResponseBo.error(500,"删除商品失败");
     }
@@ -100,7 +100,7 @@ public class GoodsController {
                 return ResponseBo.success(200,"上传成功",recognizeObj);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return ResponseBo.error(500,"上传失败");
         }
         return ResponseBo.error(500,"上传失败");
     }
