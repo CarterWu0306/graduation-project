@@ -110,10 +110,9 @@ public class GoodsController {
     public ResponseBo selGoodsListByParam(int page, int limit, @RequestParam Map<String, Object> map){
         try {
             PageInfo<Goods> pi = goodsServiceImpl.selGoodsListByParam(page, limit, map);
-            ResponseBo.list(200,"查询商品列表成功",pi.getTotal(),pi.getList());
+            return ResponseBo.list(200,"查询商品列表成功",pi.getTotal(),pi.getList());
         } catch (Exception e) {
-            ResponseBo.error(500,"查询商品列表失败");
+            return ResponseBo.error(500,"查询商品列表失败");
         }
-        return ResponseBo.error(500,"查询商品列表失败");
     }
 }
