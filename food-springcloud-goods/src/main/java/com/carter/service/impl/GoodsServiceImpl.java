@@ -55,8 +55,13 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int decreaseGoodsStock(int goodsId, int goodsNum) {
-        return 0;
+        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
+        goods.setGoodsStock(goods.getGoodsStock()-goodsNum);
+        int index = goodsMapper.updateByPrimaryKeySelective(goods);
+        return index;
     }
 
     @Override
