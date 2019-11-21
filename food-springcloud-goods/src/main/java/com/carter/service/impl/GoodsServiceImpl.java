@@ -55,6 +55,11 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public int decreaseGoodsStock(int goodsId, int goodsNum) {
+        return 0;
+    }
+
+    @Override
     public PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map) {
         PageHelper.startPage(page,limit);
 

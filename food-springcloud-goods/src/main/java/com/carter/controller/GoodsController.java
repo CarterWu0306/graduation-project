@@ -82,6 +82,11 @@ public class GoodsController {
         return ResponseBo.error(500,"删除商品失败");
     }
 
+    @RequestMapping(value = "/decreaseGoodsStock",method = RequestMethod.GET)
+    public ResponseBo decreaseGoodsStock(@RequestParam(value = "goodsId") Integer goodsId,@RequestParam(value = "goodsNum") Integer goodsNum){
+        return ResponseBo.error(500,"减少商品库存失败");
+    }
+
     /**
      * 上传并返回识别结果
      * @param mfile

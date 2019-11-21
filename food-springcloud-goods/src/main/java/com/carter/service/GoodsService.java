@@ -15,5 +15,7 @@ public interface GoodsService {
 
     int deleteGoods(int goodsId);
 
+    int decreaseGoodsStock(int goodsId,int goodsNum);
+
     PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map);
 }
