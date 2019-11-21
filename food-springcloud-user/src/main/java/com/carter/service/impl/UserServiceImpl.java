@@ -98,12 +98,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int delUser(Integer userId) {
         int index = userMapper.deleteByPrimaryKey(userId);
         return index;
     }
 
     @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
     public int changePwd(User user) {
         int index = userMapper.updateByPrimaryKeySelective(user);
         return index;
