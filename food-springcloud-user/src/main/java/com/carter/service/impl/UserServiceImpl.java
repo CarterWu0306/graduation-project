@@ -102,6 +102,13 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public int delUser(Integer userId) {
         int index = userMapper.deleteByPrimaryKey(userId);
+
+        //删除用户-角色关系
+        UserRoleExample userRoleExample = new UserRoleExample();
+        UserRoleExample.Criteria criteria = userRoleExample.createCriteria();
+
+        criteria.andUserIdEqualTo(userId);
+        index += userRoleMapper.deleteByExample(userRoleExample);
         return index;
     }
 
