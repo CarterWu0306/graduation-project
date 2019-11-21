@@ -56,15 +56,17 @@
     from user a
     left join user_role b on b.user_id = a.user_id
     left join role c on c.role_id = b.role_id
-    <if test="realName != null and realName !=''">
+    <where>
+      <if test="realName != null and realName !=''">
         and a.real_name = #{realName}
-    </if>
-    <if test="userPhone != null and userPhone !=''">
+      </if>
+      <if test="userPhone != null and userPhone !=''">
         and a.user_phone = #{userPhone}
-    </if>
-    <if test="userType != null and userType !=''">
+      </if>
+      <if test="userType != null and userType !=''">
         and c.role_id = #{userType}
-    </if>
+      </if>
+    </where>
   </select>
 
   <resultMap id="BaseResultMap" type="com.carter.pojo.User" >
