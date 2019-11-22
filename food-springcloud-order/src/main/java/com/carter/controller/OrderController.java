@@ -23,12 +23,14 @@ public class OrderController {
     public int addOrderByAdmin(@RequestParam(value = "userId") Integer userId,
                                @RequestParam(value = "totalMoney") BigDecimal totalMoney,
                                @RequestParam(value = "realTotalMoney") BigDecimal realTotalMoney,
+                               @RequestParam(value = "deductionScore") Integer deductionScore,
                                List<OrderGoods> goodsList){
         TheOrder theOrder = new TheOrder();
         theOrder.setOrderSn(UUID.randomUUID().toString());
         theOrder.setUserId(userId);
         theOrder.setTotalMoney(totalMoney);
         theOrder.setRealTotalMoney(realTotalMoney);
+        theOrder.setDeductionScore(deductionScore);
         theOrder.setOrderStatus("0");
         theOrder.setPayStatus("1");
         theOrder.setOrderCreateTime(new Date());
