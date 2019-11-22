@@ -21,4 +21,6 @@ public interface UserService {
     int changePwd(User user);
 
     Map<String, Object> selUserInfoByName(String username);
+
+    int addUserScore(Integer userId,Integer score);
 }

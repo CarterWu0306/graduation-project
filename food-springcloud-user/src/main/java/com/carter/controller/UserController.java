@@ -131,4 +131,9 @@ public class UserController {
         }
         return ResponseBo.error(500,"上传失败");
     }
+
+    @RequestMapping(value = "/addUserScore",method = RequestMethod.POST)
+    public int addUserScore(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "score")Integer score){
+        return userServiceImpl.addUserScore(userId, score);
+    }
 }

@@ -125,4 +125,14 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> userInfo = userMapper.selUserInfoByName(username);
         return userInfo;
     }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int addUserScore(Integer userId, Integer score) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        user.setUserScore(user.getUserScore()+score);
+        int index = userMapper.updateByPrimaryKeySelective(user);
+        return index;
+    }
 }
