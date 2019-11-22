@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.carter.mapper.TheOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.carter.pojo.TheOrder" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_sn" property="orderSn" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_details" property="orderDetails" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="real_total_money" property="realTotalMoney" jdbcType="DECIMAL" />
+    <result column="pay_status" property="payStatus" jdbcType="CHAR" />
+    <result column="deduction_score" property="deductionScore" jdbcType="INTEGER" />
+    <result column="order_score" property="orderScore" jdbcType="INTEGER" />
+    <result column="order_remarks" property="orderRemarks" jdbcType="VARCHAR" />
+    <result column="is_refund" property="isRefund" jdbcType="CHAR" />
+    <result column="is_appraise" property="isAppraise" jdbcType="CHAR" />
+    <result column="order_create_time" property="orderCreateTime" jdbcType="TIMESTAMP" />
+    <result column="order_pay_time" property="orderPayTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_sn, user_id, order_details, order_status, total_money, real_total_money, 
+    pay_status, deduction_score, order_score, order_remarks, is_refund, is_appraise, 
+    order_create_time, order_pay_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carter.pojo.TheOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from the_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from the_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from the_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.carter.pojo.TheOrderExample" >
+    delete from the_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.carter.pojo.TheOrder" >
+    insert into the_order (order_id, order_sn, user_id, 
+      order_details, order_status, total_money, 
+      real_total_money, pay_status, deduction_score, 
+      order_score, order_remarks, is_refund, 
+      is_appraise, order_create_time, order_pay_time
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderSn,jdbcType=CHAR}, #{userId,jdbcType=INTEGER}, 
+      #{orderDetails,jdbcType=VARCHAR}, #{orderStatus,jdbcType=CHAR}, #{totalMoney,jdbcType=DECIMAL}, 
+      #{realTotalMoney,jdbcType=DECIMAL}, #{payStatus,jdbcType=CHAR}, #{deductionScore,jdbcType=INTEGER}, 
+      #{orderScore,jdbcType=INTEGER}, #{orderRemarks,jdbcType=VARCHAR}, #{isRefund,jdbcType=CHAR}, 
+      #{isAppraise,jdbcType=CHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderPayTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.carter.pojo.TheOrder" >
+    insert into the_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderSn != null" >
+        order_sn,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderDetails != null" >
+        order_details,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="realTotalMoney != null" >
+        real_total_money,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="deductionScore != null" >
+        deduction_score,
+      </if>
+      <if test="orderScore != null" >
+        order_score,
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks,
+      </if>
+      <if test="isRefund != null" >
+        is_refund,
+      </if>
+      <if test="isAppraise != null" >
+        is_appraise,
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time,
+      </if>
+      <if test="orderPayTime != null" >
+        order_pay_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetails != null" >
+        #{orderDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realTotalMoney != null" >
+        #{realTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="deductionScore != null" >
+        #{deductionScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderScore != null" >
+        #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemarks != null" >
+        #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="isRefund != null" >
+        #{isRefund,jdbcType=CHAR},
+      </if>
+      <if test="isAppraise != null" >
+        #{isAppraise,jdbcType=CHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPayTime != null" >
+        #{orderPayTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.carter.pojo.TheOrderExample" resultType="java.lang.Integer" >
+    select count(*) from the_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update the_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderSn != null" >
+        order_sn = #{record.orderSn,jdbcType=CHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderDetails != null" >
+        order_details = #{record.orderDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.totalMoney != null" >
+        total_money = #{record.totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realTotalMoney != null" >
+        real_total_money = #{record.realTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payStatus != null" >
+        pay_status = #{record.payStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.deductionScore != null" >
+        deduction_score = #{record.deductionScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderScore != null" >
+        order_score = #{record.orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderRemarks != null" >
+        order_remarks = #{record.orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRefund != null" >
+        is_refund = #{record.isRefund,jdbcType=CHAR},
+      </if>
+      <if test="record.isAppraise != null" >
+        is_appraise = #{record.isAppraise,jdbcType=CHAR},
+      </if>
+      <if test="record.orderCreateTime != null" >
+        order_create_time = #{record.orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderPayTime != null" >
+        order_pay_time = #{record.orderPayTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update the_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      order_sn = #{record.orderSn,jdbcType=CHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      order_details = #{record.orderDetails,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=CHAR},
+      total_money = #{record.totalMoney,jdbcType=DECIMAL},
+      real_total_money = #{record.realTotalMoney,jdbcType=DECIMAL},
+      pay_status = #{record.payStatus,jdbcType=CHAR},
+      deduction_score = #{record.deductionScore,jdbcType=INTEGER},
+      order_score = #{record.orderScore,jdbcType=INTEGER},
+      order_remarks = #{record.orderRemarks,jdbcType=VARCHAR},
+      is_refund = #{record.isRefund,jdbcType=CHAR},
+      is_appraise = #{record.isAppraise,jdbcType=CHAR},
+      order_create_time = #{record.orderCreateTime,jdbcType=TIMESTAMP},
+      order_pay_time = #{record.orderPayTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.carter.pojo.TheOrder" >
+    update the_order
+    <set >
+      <if test="orderSn != null" >
+        order_sn = #{orderSn,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetails != null" >
+        order_details = #{orderDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="realTotalMoney != null" >
+        real_total_money = #{realTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="deductionScore != null" >
+        deduction_score = #{deductionScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderScore != null" >
+        order_score = #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="isRefund != null" >
+        is_refund = #{isRefund,jdbcType=CHAR},
+      </if>
+      <if test="isAppraise != null" >
+        is_appraise = #{isAppraise,jdbcType=CHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPayTime != null" >
+        order_pay_time = #{orderPayTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.carter.pojo.TheOrder" >
+    update the_order
+    set order_sn = #{orderSn,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      order_details = #{orderDetails,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      real_total_money = #{realTotalMoney,jdbcType=DECIMAL},
+      pay_status = #{payStatus,jdbcType=CHAR},
+      deduction_score = #{deductionScore,jdbcType=INTEGER},
+      order_score = #{orderScore,jdbcType=INTEGER},
+      order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      is_refund = #{isRefund,jdbcType=CHAR},
+      is_appraise = #{isAppraise,jdbcType=CHAR},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_pay_time = #{orderPayTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
