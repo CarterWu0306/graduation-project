@@ -83,8 +83,8 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/decreaseGoodsStock",method = RequestMethod.GET)
-    public ResponseBo decreaseGoodsStock(@RequestParam(value = "goodsId") Integer goodsId,@RequestParam(value = "goodsNum") Integer goodsNum){
-        return ResponseBo.error(500,"减少商品库存失败");
+    public int decreaseGoodsStock(@RequestParam(value = "goodsId") Integer goodsId,@RequestParam(value = "goodsNum") Integer goodsNum){
+        return goodsServiceImpl.decreaseGoodsStock(goodsId,goodsNum);
     }
 
     /**

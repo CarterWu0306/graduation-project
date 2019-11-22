@@ -59,9 +59,15 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public int decreaseGoodsStock(int goodsId, int goodsNum) {
         Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-        goods.setGoodsStock(goods.getGoodsStock()-goodsNum);
-        int index = goodsMapper.updateByPrimaryKeySelective(goods);
-        return index;
+        //库存足够
+        if (goods.getGoodsStock()>=goodsNum){
+            goods.setGoodsStock(goods.getGoodsStock()-goodsNum);
+            int index = goodsMapper.updateByPrimaryKeySelective(goods);
+            return index;
+        }else{
+            //库存不足
+            return 0;
+        }
     }
 
     @Override
