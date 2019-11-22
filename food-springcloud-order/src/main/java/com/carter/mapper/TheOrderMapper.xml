@@ -125,7 +125,7 @@
       #{isAppraise,jdbcType=CHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderPayTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.carter.pojo.TheOrder" >
+  <insert id="insertSelective" parameterType="com.carter.pojo.TheOrder" keyProperty="orderId" useGeneratedKeys="true">
     insert into the_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
