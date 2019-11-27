@@ -4,6 +4,7 @@ import com.carter.common.ResponseBo;
 import com.carter.mapper.GoodsMapper;
 import com.carter.pojo.Goods;
 import com.carter.pojo.GoodsExample;
+import com.carter.pojo.OrderGoods;
 import com.carter.service.GoodsService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.PageHelper;
@@ -57,17 +58,17 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int decreaseGoodsStock(int goodsId, int goodsNum) {
-        Goods goods = goodsMapper.selectByPrimaryKey(goodsId);
-        //库存足够
-        if (goods.getGoodsStock()>=goodsNum){
-            goods.setGoodsStock(goods.getGoodsStock()-goodsNum);
-            int index = goodsMapper.updateByPrimaryKeySelective(goods);
-            return index;
-        }else{
-            //库存不足
-            return 0;
+    public int decreaseGoodsStock(List<OrderGoods> goodsList) {
+        int index = 0;
+        for (OrderGoods orderGoods:goodsList){
+            Goods goods = goodsMapper.selectByPrimaryKey(orderGoods.getGoodsId());
+            //库存足够
+            if (goods.getGoodsStock()>=orderGoods.getGoodsNum()){
+                goods.setGoodsStock(goods.getGoodsStock()-orderGoods.getGoodsNum());
+                index += goodsMapper.updateByPrimaryKeySelective(goods);
+            }
         }
+        return index;
     }
 
     @Override

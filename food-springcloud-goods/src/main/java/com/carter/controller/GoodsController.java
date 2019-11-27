@@ -1,8 +1,10 @@
 package com.carter.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.carter.common.ResponseBo;
 import com.carter.pojo.Goods;
+import com.carter.pojo.OrderGoods;
 import com.carter.service.GoodsService;
 import com.carter.service.ImageService;
 import com.github.pagehelper.PageInfo;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -83,8 +86,9 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/decreaseGoodsStock",method = RequestMethod.GET)
-    public int decreaseGoodsStock(@RequestParam(value = "goodsId") Integer goodsId,@RequestParam(value = "goodsNum") Integer goodsNum){
-        return goodsServiceImpl.decreaseGoodsStock(goodsId,goodsNum);
+    public int decreaseGoodsStock(@RequestParam(value = "goodsList") String goodsListJSON){
+        List<OrderGoods> goodsList = JSONArray.parseArray(goodsListJSON, OrderGoods.class);
+        return goodsServiceImpl.decreaseGoodsStock(goodsList);
     }
 
     /**
