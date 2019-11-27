@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("feign")
+@RequestMapping("placeOrder")
 public class PlaceOrderController {
 
     @Autowired
