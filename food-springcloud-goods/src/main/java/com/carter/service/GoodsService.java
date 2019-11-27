@@ -20,4 +20,6 @@ public interface GoodsService {
     int decreaseGoodsStock(List<OrderGoods> goodsList);
 
     PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map);
+
+    List<Goods> selAllGoodsList();
 }

@@ -101,4 +101,10 @@ public class GoodsServiceImpl implements GoodsService {
 
         return pi;
     }
+
+    @Override
+    public List<Goods> selAllGoodsList() {
+        List<Goods> goods = goodsMapper.selectByExample(new GoodsExample());
+        return goods;
+    }
 }

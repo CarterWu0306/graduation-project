@@ -126,4 +126,14 @@ public class GoodsController {
             return ResponseBo.error(500,"查询商品列表失败");
         }
     }
+
+    @RequestMapping(value = "/selAllGoodsList",method = RequestMethod.GET)
+    public ResponseBo selAllGoodsList(){
+        try {
+            List<Goods> goods = goodsServiceImpl.selAllGoodsList();
+            return ResponseBo.success(200,"查询全部商品成功",goods);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"查询全部商品失败");
+        }
+    }
 }
