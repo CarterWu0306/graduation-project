@@ -22,7 +22,7 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer userId);
 
-    Map<String, Object> selUserInfoByName(String username);
+    Map<String, Object> selUserInfoByName(@Param("username")String username);
 
     List<Map<String, Object>> getUserList(@Param("realName") String realName,@Param("userPhone") String userPhone,@Param("userType") String userType);
 
