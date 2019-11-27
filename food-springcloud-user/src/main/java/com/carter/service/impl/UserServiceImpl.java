@@ -135,4 +135,20 @@ public class UserServiceImpl implements UserService {
         int index = userMapper.updateByPrimaryKeySelective(user);
         return index;
     }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int decreaseUserScore(Integer userId, Integer score) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        //积分足够
+        if (user.getUserScore()>=score){
+            user.setUserScore(user.getUserScore()-score);
+            int index = userMapper.updateByPrimaryKeySelective(user);
+            return index;
+        }else{
+            //积分不足
+            return 0;
+        }
+    }
 }

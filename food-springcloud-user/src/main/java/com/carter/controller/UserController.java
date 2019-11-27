@@ -133,7 +133,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUserScore",method = RequestMethod.POST)
-    public int addUserScore(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "score")Integer score){
+    public int addUserScore(@RequestParam(value = "userId") Integer userId,
+                            @RequestParam(value = "score")Integer score){
         return userServiceImpl.addUserScore(userId, score);
+    }
+
+    @RequestMapping(value = "/decreaseUserScore",method = RequestMethod.POST)
+    public int decreaseUserScore(@RequestParam(value = "userId") Integer userId,
+                            @RequestParam(value = "score")Integer score){
+        return userServiceImpl.decreaseUserScore(userId, score);
     }
 }

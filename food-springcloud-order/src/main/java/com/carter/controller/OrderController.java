@@ -1,5 +1,6 @@
 package com.carter.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.carter.pojo.OrderGoods;
 import com.carter.pojo.TheOrder;
 import com.carter.service.OrderService;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/order")
 public class OrderController {
     @Autowired
     private OrderService orderServiceImpl;
@@ -24,7 +26,7 @@ public class OrderController {
                                @RequestParam(value = "totalMoney") BigDecimal totalMoney,
                                @RequestParam(value = "realTotalMoney") BigDecimal realTotalMoney,
                                @RequestParam(value = "deductionScore") Integer deductionScore,
-                               List<OrderGoods> goodsList){
+                               @RequestParam(value = "goodsList") String goodsListJSON){
         TheOrder theOrder = new TheOrder();
         theOrder.setOrderSn(UUID.randomUUID().toString());
         theOrder.setUserId(userId);
@@ -35,6 +37,8 @@ public class OrderController {
         theOrder.setPayStatus("1");
         theOrder.setOrderCreateTime(new Date());
         theOrder.setOrderPayTime(new Date());
+
+        List<OrderGoods> goodsList = JSONArray.parseArray(goodsListJSON, OrderGoods.class);
 
         return orderServiceImpl.addOrderByAdmin(theOrder,goodsList);
     }

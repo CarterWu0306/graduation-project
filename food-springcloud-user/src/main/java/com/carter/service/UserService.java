@@ -23,4 +23,6 @@ public interface UserService {
     Map<String, Object> selUserInfoByName(String username);
 
     int addUserScore(Integer userId,Integer score);
+
+    int decreaseUserScore(Integer userId,Integer score);
 }
