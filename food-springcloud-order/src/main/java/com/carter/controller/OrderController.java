@@ -1,14 +1,12 @@
 package com.carter.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.carter.pojo.OrderGoods;
 import com.carter.pojo.TheOrder;
 import com.carter.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,11 +20,15 @@ public class OrderController {
     private OrderService orderServiceImpl;
 
     @RequestMapping(value = "/addOrderByAdmin",method = RequestMethod.POST)
-    public int addOrderByAdmin(@RequestParam(value = "userId") Integer userId,
-                               @RequestParam(value = "totalMoney") BigDecimal totalMoney,
-                               @RequestParam(value = "realTotalMoney") BigDecimal realTotalMoney,
-                               @RequestParam(value = "deductionScore") Integer deductionScore,
-                               @RequestParam(value = "goodsList") String goodsListJSON){
+    public int addOrderByAdmin(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userId = (Integer)jsonObject.get("userId");
+        BigDecimal totalMoney = (BigDecimal)jsonObject.get("totalMoney");
+        BigDecimal realTotalMoney = (BigDecimal)jsonObject.get("realTotalMoney");
+        Integer deductionScore = (Integer)jsonObject.get("deductionScore");
+
+        List<OrderGoods> goodsList = JSONArray.parseArray(jsonObject.get("goodsList").toString(), OrderGoods.class);
+
         TheOrder theOrder = new TheOrder();
         theOrder.setOrderSn(UUID.randomUUID().toString());
         theOrder.setUserId(userId);
@@ -37,8 +39,6 @@ public class OrderController {
         theOrder.setPayStatus("1");
         theOrder.setOrderCreateTime(new Date());
         theOrder.setOrderPayTime(new Date());
-
-        List<OrderGoods> goodsList = JSONArray.parseArray(goodsListJSON, OrderGoods.class);
 
         return orderServiceImpl.addOrderByAdmin(theOrder,goodsList);
     }

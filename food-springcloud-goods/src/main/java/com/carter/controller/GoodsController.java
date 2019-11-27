@@ -2,6 +2,7 @@ package com.carter.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.carter.common.ResponseBo;
 import com.carter.pojo.Goods;
 import com.carter.pojo.OrderGoods;
@@ -85,9 +86,10 @@ public class GoodsController {
         return ResponseBo.error(500,"删除商品失败");
     }
 
-    @RequestMapping(value = "/decreaseGoodsStock",method = RequestMethod.GET)
-    public int decreaseGoodsStock(@RequestParam(value = "goodsList") String goodsListJSON){
-        List<OrderGoods> goodsList = JSONArray.parseArray(goodsListJSON, OrderGoods.class);
+    @RequestMapping(value = "/decreaseGoodsStock",method = RequestMethod.POST)
+    public int decreaseGoodsStock(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        List<OrderGoods> goodsList = JSONArray.parseArray(jsonObject.get("goodsList").toString(), OrderGoods.class);
         return goodsServiceImpl.decreaseGoodsStock(goodsList);
     }
 

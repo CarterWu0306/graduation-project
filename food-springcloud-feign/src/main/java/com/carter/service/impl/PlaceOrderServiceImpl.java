@@ -24,9 +24,9 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int placeOrderByAdmin(Integer userId, BigDecimal totalMoney, BigDecimal realTotalMoney, Integer deductionScore, String goodsListJSON) {
-        int index = goodsFeignClient.decreaseGoodsStock(goodsListJSON);
-        index += orderFeignClient.addOrderByAdmin(userId,totalMoney,realTotalMoney,deductionScore,goodsListJSON);
+    public int placeOrderByAdmin(String data) {
+        int index = goodsFeignClient.decreaseGoodsStock(data);
+        index += orderFeignClient.addOrderByAdmin(data);
         return index;
     }
 }
