@@ -64,7 +64,10 @@ public class GoodsServiceImpl implements GoodsService {
             Goods goods = goodsMapper.selectByPrimaryKey(orderGoods.getGoodsId());
             //库存足够
             if (goods.getGoodsStock()>=orderGoods.getGoodsNum()){
+                //减少库存
                 goods.setGoodsStock(goods.getGoodsStock()-orderGoods.getGoodsNum());
+                //同时增加销售量
+                goods.setSaleNum(goods.getSaleNum()+orderGoods.getGoodsNum());
                 index += goodsMapper.updateByPrimaryKeySelective(goods);
             }
         }
