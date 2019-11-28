@@ -11,4 +11,6 @@ public interface OrderService {
     int addOrderByAdmin(TheOrder theOrder, List<OrderGoods> goodsList);
 
     PageInfo<Map<String, Object>> getOrderListByParam(int page, int limit, String orderSn, String tabType, String startDate);
+
+    List<Map<String, Object>> getAllOrders();
 }

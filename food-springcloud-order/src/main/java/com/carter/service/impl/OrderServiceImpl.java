@@ -49,4 +49,10 @@ public class OrderServiceImpl implements OrderService {
         PageInfo<Map<String, Object>> pi = new PageInfo<Map<String, Object>>(maps);
         return pi;
     }
+
+    @Override
+    public List<Map<String, Object>> getAllOrders() {
+        List<Map<String, Object>> maps = theOrderMapper.selOrderList("", "", "");
+        return maps;
+    }
 }

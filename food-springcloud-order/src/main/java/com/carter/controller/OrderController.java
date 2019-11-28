@@ -74,4 +74,14 @@ public class OrderController {
         PageInfo<Map<String, Object>> pi = orderServiceImpl.getOrderListByParam(page, limit, orderSn, tabType, startDate);
         return ResponseBo.list(200,"ok",pi.getTotal(),pi.getList());
     }
+
+    @RequestMapping(value = "getAllOrders",method = RequestMethod.GET)
+    public ResponseBo getAllOrders(){
+        try {
+            List<Map<String, Object>> allOrders = orderServiceImpl.getAllOrders();
+            return ResponseBo.success(200,"查询所有订单成功",allOrders);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"查询所有订单失败");
+        }
+    }
 }
