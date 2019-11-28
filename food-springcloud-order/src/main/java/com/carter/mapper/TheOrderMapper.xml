@@ -17,6 +17,8 @@
     <result column="is_appraise" property="isAppraise" jdbcType="CHAR" />
     <result column="order_create_time" property="orderCreateTime" jdbcType="TIMESTAMP" />
     <result column="order_pay_time" property="orderPayTime" jdbcType="TIMESTAMP" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
     <collection column="order_id" property="orderDetails" select="getOrderDetails"></collection>
   </resultMap>
   <select id="getOrderDetails" resultMap="com.carter.mapper.OrderGoodsMapper.BaseMap">
@@ -26,8 +28,9 @@
     where order_goods.order_id = #{orderId}
   </select>
   <select id="selOrderList" resultMap="BaseOrderResultMap" parameterType="java.lang.String">
-    select *
+    select the_order.*,user.nick_name,user.real_name
     from the_order
+    left join user on user.user_id=the_order.user_id
     <where>
       <if test="orderSn !=null and orderSn != ''">
         and the_order.order_sn = #{orderSn}
