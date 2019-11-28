@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.carter.mapper.TheOrderMapper" >
+  <resultMap id="BaseOrderResultMap" type="Map" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_sn" property="orderSn" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_details" property="orderDetails" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="real_total_money" property="realTotalMoney" jdbcType="DECIMAL" />
+    <result column="pay_status" property="payStatus" jdbcType="CHAR" />
+    <result column="deduction_score" property="deductionScore" jdbcType="INTEGER" />
+    <result column="order_score" property="orderScore" jdbcType="INTEGER" />
+    <result column="order_remarks" property="orderRemarks" jdbcType="VARCHAR" />
+    <result column="is_refund" property="isRefund" jdbcType="CHAR" />
+    <result column="is_appraise" property="isAppraise" jdbcType="CHAR" />
+    <result column="order_create_time" property="orderCreateTime" jdbcType="TIMESTAMP" />
+    <result column="order_pay_time" property="orderPayTime" jdbcType="TIMESTAMP" />
+    <collection column="order_id" property="orderDetails" select="getOrderDetails"></collection>
+  </resultMap>
+  <select id="getOrderDetails" resultMap="com.carter.mapper.OrderGoodsMapper.BaseMap">
+    select goods_name,goods_num,goods_price
+    from order_goods
+    left join goods on goods.goods_id = order_goods.goods_id
+    where order_goods.order_id = #{orderId}
+  </select>
+  <select id="selOrderList" resultMap="BaseOrderResultMap" parameterType="java.lang.String">
+    select *
+    from the_order
+    <where>
+      <if test="orderSn !=null and orderSn != ''">
+        and the_order.order_sn = #{orderSn}
+      </if>
+      <if test="tabType ='PendingOrders'">
+        and the_order.order_status in ('-1','0')
+      </if>
+      <if test="startDate !=null and startDate != ''">
+        and the_order.order_create_time &gt;= #{startDate}
+      </if>
+    </where>
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.TheOrder" >
     <id column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="order_sn" property="orderSn" jdbcType="CHAR" />

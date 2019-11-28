@@ -5,6 +5,7 @@ import com.carter.pojo.TheOrderExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TheOrderMapper {
     int countByExample(TheOrderExample example);
@@ -18,6 +19,8 @@ public interface TheOrderMapper {
     int insertSelective(TheOrder record);
 
     List<TheOrder> selectByExample(TheOrderExample example);
+
+    List<Map<String,Object>> selOrderList(@Param("orderSn") String orderSn, @Param("tabType") String tabType, @Param("startDate") String startDate);
 
     TheOrder selectByPrimaryKey(Integer orderId);
 
