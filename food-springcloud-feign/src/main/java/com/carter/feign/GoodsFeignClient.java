@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface GoodsFeignClient {
 
     @RequestMapping(value = "goods/decreaseGoodsStock",method = RequestMethod.POST)
-    int decreaseGoodsStock(@RequestBody String goodsListJSON);
+    int decreaseGoodsStock(@RequestBody String data);
 }

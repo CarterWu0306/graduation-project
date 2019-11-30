@@ -24,8 +24,8 @@ public class OrderController {
     public int addOrderByAdmin(@RequestBody String data){
         JSONObject jsonObject = JSONObject.parseObject(data);
         Integer userId = (Integer)jsonObject.get("userId");
-        BigDecimal totalMoney = (BigDecimal)jsonObject.get("totalMoney");
-        BigDecimal realTotalMoney = (BigDecimal)jsonObject.get("realTotalMoney");
+        String totalMoney = (String)jsonObject.get("totalMoney");
+        String realTotalMoney = (String)jsonObject.get("realTotalMoney");
         Integer deductionScore = (Integer)jsonObject.get("deductionScore");
 
         List<OrderGoods> goodsList = JSONArray.parseArray(jsonObject.get("goodsList").toString(), OrderGoods.class);
@@ -33,8 +33,8 @@ public class OrderController {
         TheOrder theOrder = new TheOrder();
         theOrder.setOrderSn(UUID.randomUUID().toString());
         theOrder.setUserId(userId);
-        theOrder.setTotalMoney(totalMoney);
-        theOrder.setRealTotalMoney(realTotalMoney);
+        theOrder.setTotalMoney(new BigDecimal(totalMoney));
+        theOrder.setRealTotalMoney(new BigDecimal(realTotalMoney));
         theOrder.setDeductionScore(deductionScore);
         theOrder.setOrderStatus("0");
         theOrder.setPayStatus("1");
