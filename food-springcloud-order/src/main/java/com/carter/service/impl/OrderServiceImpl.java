@@ -3,6 +3,7 @@ package com.carter.service.impl;
 import com.carter.mapper.OrderGoodsMapper;
 import com.carter.mapper.TheOrderMapper;
 import com.carter.pojo.OrderGoods;
+import com.carter.pojo.OrderGoodsExample;
 import com.carter.pojo.TheOrder;
 import com.carter.service.OrderService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
@@ -72,6 +73,13 @@ public class OrderServiceImpl implements OrderService {
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     public int deleteOrder(Integer orderId) {
-        return theOrderMapper.deleteByPrimaryKey(orderId);
+        int index = theOrderMapper.deleteByPrimaryKey(orderId);
+        //同时删除订单-商品对应表
+        OrderGoodsExample orderGoodsExample = new OrderGoodsExample();
+        OrderGoodsExample.Criteria criteria = orderGoodsExample.createCriteria();
+        criteria.andOrderIdEqualTo(orderId);
+
+        index +=orderGoodsMapper.deleteByExample(orderGoodsExample);
+        return index;
     }
 }
