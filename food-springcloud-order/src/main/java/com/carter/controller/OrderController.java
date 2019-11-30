@@ -84,4 +84,25 @@ public class OrderController {
             return ResponseBo.error(500,"查询所有订单失败");
         }
     }
+
+    @RequestMapping(value = "completeOrder",method = RequestMethod.POST)
+    public ResponseBo completeOrder(@RequestParam("orderId") Integer orderId){
+        try {
+            TheOrder order = orderServiceImpl.getOrderByOrderId(orderId);
+            orderServiceImpl.changeOrderStatus(order);
+            return ResponseBo.success(200,"完成订单成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"完成订单失败");
+        }
+    }
+
+    @RequestMapping(value = "deleteOrder",method = RequestMethod.GET)
+    public ResponseBo deleteOrder(@RequestParam("orderId") Integer orderId){
+        try {
+            orderServiceImpl.deleteOrder(orderId);
+            return ResponseBo.success(200,"删除订单成功","");
+        }catch (Exception e) {
+            return ResponseBo.error(500,"删除订单失败");
+        }
+    }
 }

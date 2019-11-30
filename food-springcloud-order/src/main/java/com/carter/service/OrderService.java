@@ -13,4 +13,10 @@ public interface OrderService {
     PageInfo<Map<String, Object>> getOrderListByParam(int page, int limit, String orderSn, String tabType, String startDate);
 
     List<Map<String, Object>> getAllOrders();
+
+    TheOrder getOrderByOrderId(Integer orderId);
+
+    int changeOrderStatus(TheOrder order);
+
+    int deleteOrder(Integer orderId);
 }

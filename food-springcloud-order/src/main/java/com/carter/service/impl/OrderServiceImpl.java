@@ -55,4 +55,23 @@ public class OrderServiceImpl implements OrderService {
         List<Map<String, Object>> maps = theOrderMapper.selOrderList("", "", "");
         return maps;
     }
+
+    @Override
+    public TheOrder getOrderByOrderId(Integer orderId) {
+        return theOrderMapper.selectByPrimaryKey(orderId);
+    }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int changeOrderStatus(TheOrder order) {
+        return theOrderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteOrder(Integer orderId) {
+        return theOrderMapper.deleteByPrimaryKey(orderId);
+    }
 }
