@@ -35,7 +35,7 @@
       <if test="orderSn !=null and orderSn != ''">
         and the_order.order_sn = #{orderSn}
       </if>
-      <if test="tabType ='PendingOrders'">
+      <if test="tabType =='PendingOrders'">
         and the_order.order_status in ('-1','0')
       </if>
       <if test="startDate !=null and startDate != ''">
