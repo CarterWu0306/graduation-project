@@ -86,9 +86,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "completeOrder",method = RequestMethod.POST)
-    public ResponseBo completeOrder(@RequestParam("orderId") Integer orderId){
+    public ResponseBo completeOrder(@RequestBody TheOrder order){
         try {
-            TheOrder order = orderServiceImpl.getOrderByOrderId(orderId);
+            order.setOrderStatus("1");
             orderServiceImpl.changeOrderStatus(order);
             return ResponseBo.success(200,"完成订单成功","");
         } catch (Exception e) {
