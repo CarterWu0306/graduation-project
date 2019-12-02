@@ -19,4 +19,6 @@ public interface OrderService {
     int changeOrderStatus(TheOrder order);
 
     int deleteOrder(Integer orderId);
+
+    List<Map<String, Object>> sumOrder();
 }

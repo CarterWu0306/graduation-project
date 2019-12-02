@@ -22,6 +22,8 @@ public interface TheOrderMapper {
 
     List<Map<String,Object>> selOrderList(@Param("orderSn") String orderSn, @Param("tabType") String tabType, @Param("startDate") String startDate);
 
+    List<Map<String, Object>> sumOrder();
+
     TheOrder selectByPrimaryKey(Integer orderId);
 
     int updateByExampleSelective(@Param("record") TheOrder record, @Param("example") TheOrderExample example);

@@ -44,6 +44,19 @@
     </where>
   </select>
 
+  <resultMap id="SumOrderMap" type="Map" >
+    <result column="sum" property="sum"/>
+    <result column="year" property="year"/>
+    <result column="month" property="month"/>
+  </resultMap>
+
+  <select id="sumOrder" resultMap="SumOrderMap">
+    select count(*) as sum,year(order_create_time) as year, MONTH(order_create_time) as month
+    from the_order
+    where year(order_create_time) = year(now())
+    group by year(order_create_time), MONTH(order_create_time)
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.TheOrder" >
     <id column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="order_sn" property="orderSn" jdbcType="CHAR" />

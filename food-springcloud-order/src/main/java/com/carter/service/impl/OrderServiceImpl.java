@@ -82,4 +82,10 @@ public class OrderServiceImpl implements OrderService {
         index +=orderGoodsMapper.deleteByExample(orderGoodsExample);
         return index;
     }
+
+    @Override
+    public List<Map<String, Object>> sumOrder() {
+        List<Map<String, Object>> list = theOrderMapper.sumOrder();
+        return list;
+    }
 }
