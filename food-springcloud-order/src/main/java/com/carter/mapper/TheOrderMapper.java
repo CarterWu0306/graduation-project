@@ -24,6 +24,8 @@ public interface TheOrderMapper {
 
     List<Map<String, Object>> sumOrder();
 
+    List<Map<String, Object>> sumSales();
+
     TheOrder selectByPrimaryKey(Integer orderId);
 
     int updateByExampleSelective(@Param("record") TheOrder record, @Param("example") TheOrderExample example);

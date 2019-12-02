@@ -115,4 +115,14 @@ public class OrderController {
             return ResponseBo.error(500,"统计新增订单数失败");
         }
     }
+
+    @RequestMapping(value = "/sumSales",method = RequestMethod.GET)
+    public ResponseBo sumSales(){
+        try {
+            List<Map<String, Object>> data = orderServiceImpl.sumSales();
+            return ResponseBo.success(200,"统计销售额成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"统计销售额失败");
+        }
+    }
 }

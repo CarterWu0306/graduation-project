@@ -21,4 +21,6 @@ public interface OrderService {
     int deleteOrder(Integer orderId);
 
     List<Map<String, Object>> sumOrder();
+
+    List<Map<String, Object>> sumSales();
 }

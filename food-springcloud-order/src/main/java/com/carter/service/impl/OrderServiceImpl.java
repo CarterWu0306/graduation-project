@@ -88,4 +88,10 @@ public class OrderServiceImpl implements OrderService {
         List<Map<String, Object>> list = theOrderMapper.sumOrder();
         return list;
     }
+
+    @Override
+    public List<Map<String, Object>> sumSales() {
+        List<Map<String, Object>> list = theOrderMapper.sumSales();
+        return list;
+    }
 }
