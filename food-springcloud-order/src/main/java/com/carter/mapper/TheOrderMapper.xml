@@ -53,7 +53,7 @@
   <select id="sumOrder" resultMap="SumOrderMap">
     select count(*) as sum,year(order_create_time) as year, MONTH(order_create_time) as month
     from the_order
-    where year(order_create_time) = year(now())
+    where year(order_create_time) = year(now()) and pay_status = '1'
     group by year(order_create_time), MONTH(order_create_time)
   </select>
 
