@@ -110,4 +110,10 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> goods = goodsMapper.selectByExample(new GoodsExample());
         return goods;
     }
+
+    @Override
+    public List<Map<String, Object>> sumGoods() {
+        List<Map<String, Object>> list = goodsMapper.sumGoods();
+        return list;
+    }
 }

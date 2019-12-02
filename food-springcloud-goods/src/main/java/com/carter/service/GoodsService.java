@@ -22,4 +22,6 @@ public interface GoodsService {
     PageInfo<Goods> selGoodsListByParam(int page, int limit, Map<String, Object> map);
 
     List<Goods> selAllGoodsList();
+
+    List<Map<String, Object>> sumGoods();
 }

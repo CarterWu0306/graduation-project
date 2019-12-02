@@ -5,6 +5,7 @@ import com.carter.pojo.GoodsExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsMapper {
     int countByExample(GoodsExample example);
@@ -20,6 +21,8 @@ public interface GoodsMapper {
     List<Goods> selectByExampleWithBLOBs(GoodsExample example);
 
     List<Goods> selectByExample(GoodsExample example);
+
+    List<Map<String, Object>> sumGoods();
 
     Goods selectByPrimaryKey(Integer goodsId);
 
