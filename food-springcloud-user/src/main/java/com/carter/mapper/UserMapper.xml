@@ -32,6 +32,19 @@
     where user.username = #{username}
   </select>
 
+  <resultMap id="SumNewUserMap" type="Map" >
+    <result column="sum" property="sum"/>
+    <result column="year" property="year"/>
+    <result column="month" property="month"/>
+  </resultMap>
+
+  <select id="sumNewUser" resultMap="SumNewUserMap">
+    select count(*) as sum, YEAR(create_time) as year, MONTH(create_time) as month
+    from user
+    where year(create_time) = year(now())
+    group by MONTH(create_time)
+  </select>
+
   <resultMap id="BaseResultList" type="java.util.Map" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />

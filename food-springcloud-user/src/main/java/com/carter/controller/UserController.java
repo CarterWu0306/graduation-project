@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -142,5 +143,15 @@ public class UserController {
     public int decreaseUserScore(@RequestParam(value = "userId") Integer userId,
                             @RequestParam(value = "score")Integer score){
         return userServiceImpl.decreaseUserScore(userId, score);
+    }
+
+    @RequestMapping(value = "/sumNewUser",method = RequestMethod.GET)
+    public ResponseBo sumNewUser(){
+        try {
+            List<Map<String, Object>> data = userServiceImpl.sumNewUser();
+            return ResponseBo.success(200,"统计新增用户成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"统计新增用户失败");
+        }
     }
 }

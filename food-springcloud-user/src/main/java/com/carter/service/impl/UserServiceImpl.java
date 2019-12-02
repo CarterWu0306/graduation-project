@@ -151,4 +151,10 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
     }
+
+    @Override
+    public List<Map<String, Object>> sumNewUser() {
+        List<Map<String, Object>> list = userMapper.sumNewUser();
+        return list;
+    }
 }

@@ -3,6 +3,7 @@ package com.carter.service;
 import com.carter.pojo.User;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -25,4 +26,6 @@ public interface UserService {
     int addUserScore(Integer userId,Integer score);
 
     int decreaseUserScore(Integer userId,Integer score);
+
+    List<Map<String, Object>> sumNewUser();
 }
