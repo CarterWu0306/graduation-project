@@ -94,4 +94,16 @@ public class OrderServiceImpl implements OrderService {
         List<Map<String, Object>> list = theOrderMapper.sumSales();
         return list;
     }
+
+    @Override
+    public List<Map<String, Object>> sumSalesLatestWeek() {
+        List<Map<String, Object>> list = theOrderMapper.sumSalesLatestWeek();
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> sumFlowTime() {
+        List<Map<String, Object>> list = theOrderMapper.sumFlowTime();
+        return list;
+    }
 }

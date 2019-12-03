@@ -23,4 +23,8 @@ public interface OrderService {
     List<Map<String, Object>> sumOrder();
 
     List<Map<String, Object>> sumSales();
+
+    List<Map<String, Object>> sumSalesLatestWeek();
+
+    List<Map<String, Object>> sumFlowTime();
 }

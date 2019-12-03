@@ -26,6 +26,10 @@ public interface TheOrderMapper {
 
     List<Map<String, Object>> sumSales();
 
+    List<Map<String, Object>> sumSalesLatestWeek();
+
+    List<Map<String, Object>> sumFlowTime();
+
     TheOrder selectByPrimaryKey(Integer orderId);
 
     int updateByExampleSelective(@Param("record") TheOrder record, @Param("example") TheOrderExample example);

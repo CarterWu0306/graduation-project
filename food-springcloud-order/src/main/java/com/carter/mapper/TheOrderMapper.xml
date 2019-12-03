@@ -64,6 +64,36 @@
     group by year(order_create_time), MONTH(order_create_time)
   </select>
 
+  <resultMap id="SumSalesLatestWeekMap" type="Map" >
+    <result column="sum" property="sum"/>
+    <result column="month" property="month"/>
+    <result column="dayOfWeek" property="dayOfWeek"/>
+  </resultMap>
+
+  <select id="sumSalesLatestWeek" resultMap="SumSalesLatestWeekMap">
+    select sum(real_total_money) as sum, MONTH(order_create_time) as month,DAYOFWEEK(order_create_time) dayOfWeek
+    from the_order
+    where week(order_create_time) = week(now()) and pay_status = '1'
+    group by DAYOFWEEK(order_create_time)
+  </select>
+
+  <resultMap id="SumFlowTimeMap" type="Map" >
+    <result column="sum" property="sum"/>
+    <result column="month" property="month"/>
+    <result column="hourOfWeek" property="hourOfWeek"/>
+  </resultMap>
+
+  <select id="sumFlowTime" resultMap="SumFlowTimeMap">
+  select count(*) as sum,month(order_create_time) month,hour(order_create_time) hourOfDay
+  from the_order
+  where year(order_create_time) = year(now()) and month(order_create_time) = month(now())
+  group by  hourOfDay between 5 and 9,
+                      hourOfDay between 10 and 13,
+                      hourOfDay between 14 and 16,
+                      hourOfDay between 17 and 21,
+                      hourOfDay between 22 and 4
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.TheOrder" >
     <id column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="order_sn" property="orderSn" jdbcType="CHAR" />

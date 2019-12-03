@@ -125,4 +125,24 @@ public class OrderController {
             return ResponseBo.error(500,"统计销售额失败");
         }
     }
+
+    @RequestMapping(value = "/sumSalesLatestWeek",method = RequestMethod.GET)
+    public ResponseBo sumSalesLatestWeek(){
+        try {
+            List<Map<String, Object>> data = orderServiceImpl.sumSalesLatestWeek();
+            return ResponseBo.success(200,"统计最近一周销售额成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"统计最近一周销售额失败");
+        }
+    }
+
+    @RequestMapping(value = "/sumFlowTime",method = RequestMethod.GET)
+    public ResponseBo sumFlowTime(){
+        try {
+            List<Map<String, Object>> data = orderServiceImpl.sumFlowTime();
+            return ResponseBo.success(200,"统计本月客流量时间段成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"统计本月客流量时间段失败");
+        }
+    }
 }
