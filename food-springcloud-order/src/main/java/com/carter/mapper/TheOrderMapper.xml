@@ -42,6 +42,7 @@
         and the_order.order_create_time &gt;= #{startDate}
       </if>
     </where>
+    order by order_create_time desc
   </select>
 
   <resultMap id="SumOrderMap" type="Map" >
