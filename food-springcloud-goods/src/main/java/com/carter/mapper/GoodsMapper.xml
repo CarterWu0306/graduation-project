@@ -15,12 +15,13 @@
   </select>
 
   <resultMap id="SumHotGoodsMap" type="Map" >
+    <result column="goods_id" property="goodsId"/>
     <result column="sum" property="sum"/>
     <result column="goods_name" property="goodsName"/>
   </resultMap>
 
   <select id="sumHotGoods" resultMap="SumHotGoodsMap">
-    select sum(sale_num) sum,goods_name goodsName
+    select goods_id goodsId,sum(sale_num) sum,goods_name goodsName
     from goods
     group by goods_name
     order by sale_num desc limit 5
