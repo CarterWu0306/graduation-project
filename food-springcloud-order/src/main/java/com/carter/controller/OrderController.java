@@ -97,14 +97,13 @@ public class OrderController {
     }
 
     @RequestMapping(value = "changeOrderStatusToAppraised",method = RequestMethod.POST)
-    public ResponseBo changeOrderStatusToAppraised(@RequestBody TheOrder order){
-        try {
-            order.setIsAppraise("1");
-            orderServiceImpl.changeOrderStatus(order);
-            return ResponseBo.success(200,"修改订单状态为已评价成功","");
-        } catch (Exception e) {
-            return ResponseBo.error(500,"修改订单状态为已评价失败");
-        }
+    public int changeOrderStatusToAppraised(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer orderId = (Integer)jsonObject.get("orderId");
+        TheOrder order = new TheOrder();
+        order.setOrderId(orderId);
+        order.setIsAppraise("1");
+        return orderServiceImpl.changeOrderStatus(order);
     }
 
     @RequestMapping(value = "deleteOrder",method = RequestMethod.GET)
