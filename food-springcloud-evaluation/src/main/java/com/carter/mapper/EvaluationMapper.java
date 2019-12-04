@@ -2,7 +2,6 @@ package com.carter.mapper;
 
 import com.carter.pojo.Evaluation;
 import com.carter.pojo.EvaluationExample;
-import com.carter.pojo.EvaluationWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,25 +13,19 @@ public interface EvaluationMapper {
 
     int deleteByPrimaryKey(Integer evaluationId);
 
-    int insert(EvaluationWithBLOBs record);
+    int insert(Evaluation record);
 
-    int insertSelective(EvaluationWithBLOBs record);
-
-    List<EvaluationWithBLOBs> selectByExampleWithBLOBs(EvaluationExample example);
+    int insertSelective(Evaluation record);
 
     List<Evaluation> selectByExample(EvaluationExample example);
 
-    EvaluationWithBLOBs selectByPrimaryKey(Integer evaluationId);
+    Evaluation selectByPrimaryKey(Integer evaluationId);
 
-    int updateByExampleSelective(@Param("record") EvaluationWithBLOBs record, @Param("example") EvaluationExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") EvaluationWithBLOBs record, @Param("example") EvaluationExample example);
+    int updateByExampleSelective(@Param("record") Evaluation record, @Param("example") EvaluationExample example);
 
     int updateByExample(@Param("record") Evaluation record, @Param("example") EvaluationExample example);
 
-    int updateByPrimaryKeySelective(EvaluationWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(EvaluationWithBLOBs record);
+    int updateByPrimaryKeySelective(Evaluation record);
 
     int updateByPrimaryKey(Evaluation record);
 }

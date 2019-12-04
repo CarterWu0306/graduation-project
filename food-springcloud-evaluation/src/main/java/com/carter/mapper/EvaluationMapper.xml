@@ -6,15 +6,13 @@
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="order_score" property="orderScore" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="is_reply" property="isReply" jdbcType="CHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
     <result column="is_show" property="isShow" jdbcType="CHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.carter.pojo.EvaluationWithBLOBs" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-    <result column="reply_content" property="replyContent" jdbcType="LONGVARCHAR" />
-    <result column="images" property="images" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,27 +73,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    evaluation_id, order_id, user_id, order_score, is_reply, is_show, create_time, reply_time
+    evaluation_id, order_id, user_id, order_score, content, is_reply, reply_content, 
+    images, is_show, create_time, reply_time
   </sql>
-  <sql id="Blob_Column_List" >
-    content, reply_content, images
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.carter.pojo.EvaluationExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from evaluation
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carter.pojo.EvaluationExample" >
     select
     <if test="distinct" >
@@ -110,11 +90,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from evaluation
     where evaluation_id = #{evaluationId,jdbcType=INTEGER}
   </select>
@@ -128,17 +106,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+  <insert id="insert" parameterType="com.carter.pojo.Evaluation" >
     insert into evaluation (evaluation_id, order_id, user_id, 
-      order_score, is_reply, is_show, 
-      create_time, reply_time, content, 
-      reply_content, images)
+      order_score, content, is_reply, 
+      reply_content, images, is_show, 
+      create_time, reply_time)
     values (#{evaluationId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{orderScore,jdbcType=INTEGER}, #{isReply,jdbcType=CHAR}, #{isShow,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{replyTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, 
-      #{replyContent,jdbcType=LONGVARCHAR}, #{images,jdbcType=LONGVARCHAR})
+      #{orderScore,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{isReply,jdbcType=CHAR}, 
+      #{replyContent,jdbcType=VARCHAR}, #{images,jdbcType=VARCHAR}, #{isShow,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{replyTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.carter.pojo.Evaluation" >
     insert into evaluation
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="evaluationId != null" >
@@ -153,8 +131,17 @@
       <if test="orderScore != null" >
         order_score,
       </if>
+      <if test="content != null" >
+        content,
+      </if>
       <if test="isReply != null" >
         is_reply,
+      </if>
+      <if test="replyContent != null" >
+        reply_content,
+      </if>
+      <if test="images != null" >
+        images,
       </if>
       <if test="isShow != null" >
         is_show,
@@ -164,15 +151,6 @@
       </if>
       <if test="replyTime != null" >
         reply_time,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="replyContent != null" >
-        reply_content,
-      </if>
-      <if test="images != null" >
-        images,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -188,8 +166,17 @@
       <if test="orderScore != null" >
         #{orderScore,jdbcType=INTEGER},
       </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
       <if test="isReply != null" >
         #{isReply,jdbcType=CHAR},
+      </if>
+      <if test="replyContent != null" >
+        #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
       </if>
       <if test="isShow != null" >
         #{isShow,jdbcType=CHAR},
@@ -199,15 +186,6 @@
       </if>
       <if test="replyTime != null" >
         #{replyTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="replyContent != null" >
-        #{replyContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="images != null" >
-        #{images,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -232,8 +210,17 @@
       <if test="record.orderScore != null" >
         order_score = #{record.orderScore,jdbcType=INTEGER},
       </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
       <if test="record.isReply != null" >
         is_reply = #{record.isReply,jdbcType=CHAR},
+      </if>
+      <if test="record.replyContent != null" >
+        reply_content = #{record.replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null" >
+        images = #{record.images,jdbcType=VARCHAR},
       </if>
       <if test="record.isShow != null" >
         is_show = #{record.isShow,jdbcType=CHAR},
@@ -244,33 +231,7 @@
       <if test="record.replyTime != null" >
         reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.replyContent != null" >
-        reply_content = #{record.replyContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.images != null" >
-        images = #{record.images,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update evaluation
-    set evaluation_id = #{record.evaluationId,jdbcType=INTEGER},
-      order_id = #{record.orderId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      order_score = #{record.orderScore,jdbcType=INTEGER},
-      is_reply = #{record.isReply,jdbcType=CHAR},
-      is_show = #{record.isShow,jdbcType=CHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
-      content = #{record.content,jdbcType=LONGVARCHAR},
-      reply_content = #{record.replyContent,jdbcType=LONGVARCHAR},
-      images = #{record.images,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -281,7 +242,10 @@
       order_id = #{record.orderId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       order_score = #{record.orderScore,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
       is_reply = #{record.isReply,jdbcType=CHAR},
+      reply_content = #{record.replyContent,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
       is_show = #{record.isShow,jdbcType=CHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       reply_time = #{record.replyTime,jdbcType=TIMESTAMP}
@@ -289,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.carter.pojo.Evaluation" >
     update evaluation
     <set >
       <if test="orderId != null" >
@@ -301,8 +265,17 @@
       <if test="orderScore != null" >
         order_score = #{orderScore,jdbcType=INTEGER},
       </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
       <if test="isReply != null" >
         is_reply = #{isReply,jdbcType=CHAR},
+      </if>
+      <if test="replyContent != null" >
+        reply_content = #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=VARCHAR},
       </if>
       <if test="isShow != null" >
         is_show = #{isShow,jdbcType=CHAR},
@@ -313,30 +286,7 @@
       <if test="replyTime != null" >
         reply_time = #{replyTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="replyContent != null" >
-        reply_content = #{replyContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="images != null" >
-        images = #{images,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
-    update evaluation
-    set order_id = #{orderId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      order_score = #{orderScore,jdbcType=INTEGER},
-      is_reply = #{isReply,jdbcType=CHAR},
-      is_show = #{isShow,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      reply_time = #{replyTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR},
-      reply_content = #{replyContent,jdbcType=LONGVARCHAR},
-      images = #{images,jdbcType=LONGVARCHAR}
     where evaluation_id = #{evaluationId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.carter.pojo.Evaluation" >
@@ -344,7 +294,10 @@
     set order_id = #{orderId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       order_score = #{orderScore,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
       is_reply = #{isReply,jdbcType=CHAR},
+      reply_content = #{replyContent,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
       is_show = #{isShow,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       reply_time = #{replyTime,jdbcType=TIMESTAMP}

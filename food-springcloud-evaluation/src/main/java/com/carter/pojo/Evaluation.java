@@ -11,7 +11,13 @@ public class Evaluation {
 
     private Integer orderScore;
 
+    private String content;
+
     private String isReply;
+
+    private String replyContent;
+
+    private String images;
 
     private String isShow;
 
@@ -51,12 +57,36 @@ public class Evaluation {
         this.orderScore = orderScore;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
     public String getIsReply() {
         return isReply;
     }
 
     public void setIsReply(String isReply) {
         this.isReply = isReply == null ? null : isReply.trim();
+    }
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent == null ? null : replyContent.trim();
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images == null ? null : images.trim();
     }
 
     public String getIsShow() {

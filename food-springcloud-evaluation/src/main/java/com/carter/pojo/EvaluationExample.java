@@ -345,6 +345,76 @@ public class EvaluationExample {
             return (Criteria) this;
         }
 
+        public Criteria andContentIsNull() {
+            addCriterion("content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentIsNotNull() {
+            addCriterion("content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentEqualTo(String value) {
+            addCriterion("content =", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotEqualTo(String value) {
+            addCriterion("content <>", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentGreaterThan(String value) {
+            addCriterion("content >", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
+            addCriterion("content >=", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLessThan(String value) {
+            addCriterion("content <", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLessThanOrEqualTo(String value) {
+            addCriterion("content <=", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentLike(String value) {
+            addCriterion("content like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotLike(String value) {
+            addCriterion("content not like", value, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentIn(List<String> values) {
+            addCriterion("content in", values, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotIn(List<String> values) {
+            addCriterion("content not in", values, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentBetween(String value1, String value2) {
+            addCriterion("content between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNotBetween(String value1, String value2) {
+            addCriterion("content not between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
         public Criteria andIsReplyIsNull() {
             addCriterion("is_reply is null");
             return (Criteria) this;
@@ -412,6 +482,146 @@ public class EvaluationExample {
 
         public Criteria andIsReplyNotBetween(String value1, String value2) {
             addCriterion("is_reply not between", value1, value2, "isReply");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentIsNull() {
+            addCriterion("reply_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentIsNotNull() {
+            addCriterion("reply_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentEqualTo(String value) {
+            addCriterion("reply_content =", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentNotEqualTo(String value) {
+            addCriterion("reply_content <>", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentGreaterThan(String value) {
+            addCriterion("reply_content >", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentGreaterThanOrEqualTo(String value) {
+            addCriterion("reply_content >=", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentLessThan(String value) {
+            addCriterion("reply_content <", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentLessThanOrEqualTo(String value) {
+            addCriterion("reply_content <=", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentLike(String value) {
+            addCriterion("reply_content like", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentNotLike(String value) {
+            addCriterion("reply_content not like", value, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentIn(List<String> values) {
+            addCriterion("reply_content in", values, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentNotIn(List<String> values) {
+            addCriterion("reply_content not in", values, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentBetween(String value1, String value2) {
+            addCriterion("reply_content between", value1, value2, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyContentNotBetween(String value1, String value2) {
+            addCriterion("reply_content not between", value1, value2, "replyContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesIsNull() {
+            addCriterion("images is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesIsNotNull() {
+            addCriterion("images is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesEqualTo(String value) {
+            addCriterion("images =", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesNotEqualTo(String value) {
+            addCriterion("images <>", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesGreaterThan(String value) {
+            addCriterion("images >", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesGreaterThanOrEqualTo(String value) {
+            addCriterion("images >=", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesLessThan(String value) {
+            addCriterion("images <", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesLessThanOrEqualTo(String value) {
+            addCriterion("images <=", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesLike(String value) {
+            addCriterion("images like", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesNotLike(String value) {
+            addCriterion("images not like", value, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesIn(List<String> values) {
+            addCriterion("images in", values, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesNotIn(List<String> values) {
+            addCriterion("images not in", values, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesBetween(String value1, String value2) {
+            addCriterion("images between", value1, value2, "images");
+            return (Criteria) this;
+        }
+
+        public Criteria andImagesNotBetween(String value1, String value2) {
+            addCriterion("images not between", value1, value2, "images");
             return (Criteria) this;
         }
 
