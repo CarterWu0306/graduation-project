@@ -21,7 +21,7 @@
   </resultMap>
 
   <select id="sumHotGoods" resultMap="SumHotGoodsMap">
-    select goods_id goodsId,sum(sale_num) sum,goods_name goodsName
+    select goods_id,sum(sale_num) sum,goods_name
     from goods
     group by goods_name
     order by sale_num desc limit 5
