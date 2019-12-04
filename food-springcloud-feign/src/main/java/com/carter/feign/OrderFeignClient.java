@@ -10,4 +10,7 @@ public interface OrderFeignClient {
 
     @RequestMapping(value = "order/addOrderByAdmin",method = RequestMethod.POST)
     int addOrderByAdmin(@RequestBody String data);
+
+    @RequestMapping(value = "order/changeOrderStatusToAppraised",method = RequestMethod.POST)
+    int changeOrderStatusToAppraised(@RequestBody String data);
 }
