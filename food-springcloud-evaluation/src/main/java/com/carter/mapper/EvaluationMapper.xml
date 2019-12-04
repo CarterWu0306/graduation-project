@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.carter.mapper.EvaluationMapper" >
+  <resultMap id="BaseResultMap" type="com.carter.pojo.Evaluation" >
+    <id column="evaluation_id" property="evaluationId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_score" property="orderScore" jdbcType="INTEGER" />
+    <result column="is_reply" property="isReply" jdbcType="CHAR" />
+    <result column="is_show" property="isShow" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.carter.pojo.EvaluationWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="LONGVARCHAR" />
+    <result column="images" property="images" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    evaluation_id, order_id, user_id, order_score, is_reply, is_show, create_time, reply_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, reply_content, images
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.carter.pojo.EvaluationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from evaluation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carter.pojo.EvaluationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from evaluation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from evaluation
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from evaluation
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.carter.pojo.EvaluationExample" >
+    delete from evaluation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+    insert into evaluation (evaluation_id, order_id, user_id, 
+      order_score, is_reply, is_show, 
+      create_time, reply_time, content, 
+      reply_content, images)
+    values (#{evaluationId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{orderScore,jdbcType=INTEGER}, #{isReply,jdbcType=CHAR}, #{isShow,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{replyTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, 
+      #{replyContent,jdbcType=LONGVARCHAR}, #{images,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+    insert into evaluation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="evaluationId != null" >
+        evaluation_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderScore != null" >
+        order_score,
+      </if>
+      <if test="isReply != null" >
+        is_reply,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="replyTime != null" >
+        reply_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="replyContent != null" >
+        reply_content,
+      </if>
+      <if test="images != null" >
+        images,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="evaluationId != null" >
+        #{evaluationId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderScore != null" >
+        #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="isReply != null" >
+        #{isReply,jdbcType=CHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyTime != null" >
+        #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        #{replyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.carter.pojo.EvaluationExample" resultType="java.lang.Integer" >
+    select count(*) from evaluation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update evaluation
+    <set >
+      <if test="record.evaluationId != null" >
+        evaluation_id = #{record.evaluationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderScore != null" >
+        order_score = #{record.orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.isReply != null" >
+        is_reply = #{record.isReply,jdbcType=CHAR},
+      </if>
+      <if test="record.isShow != null" >
+        is_show = #{record.isShow,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.replyTime != null" >
+        reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.replyContent != null" >
+        reply_content = #{record.replyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.images != null" >
+        images = #{record.images,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update evaluation
+    set evaluation_id = #{record.evaluationId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      order_score = #{record.orderScore,jdbcType=INTEGER},
+      is_reply = #{record.isReply,jdbcType=CHAR},
+      is_show = #{record.isShow,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      reply_content = #{record.replyContent,jdbcType=LONGVARCHAR},
+      images = #{record.images,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update evaluation
+    set evaluation_id = #{record.evaluationId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      order_score = #{record.orderScore,jdbcType=INTEGER},
+      is_reply = #{record.isReply,jdbcType=CHAR},
+      is_show = #{record.isShow,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      reply_time = #{record.replyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+    update evaluation
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderScore != null" >
+        order_score = #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="isReply != null" >
+        is_reply = #{isReply,jdbcType=CHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replyTime != null" >
+        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        reply_content = #{replyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.carter.pojo.EvaluationWithBLOBs" >
+    update evaluation
+    set order_id = #{orderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      order_score = #{orderScore,jdbcType=INTEGER},
+      is_reply = #{isReply,jdbcType=CHAR},
+      is_show = #{isShow,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      reply_content = #{replyContent,jdbcType=LONGVARCHAR},
+      images = #{images,jdbcType=LONGVARCHAR}
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.carter.pojo.Evaluation" >
+    update evaluation
+    set order_id = #{orderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      order_score = #{orderScore,jdbcType=INTEGER},
+      is_reply = #{isReply,jdbcType=CHAR},
+      is_show = #{isShow,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP}
+    where evaluation_id = #{evaluationId,jdbcType=INTEGER}
+  </update>
+</mapper>
