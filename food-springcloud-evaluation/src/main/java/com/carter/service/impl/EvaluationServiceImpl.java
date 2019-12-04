@@ -18,7 +18,7 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int appraiseOrder(Evaluation evaluation) {
+    public int addEvaluation(Evaluation evaluation) {
         int index = evaluationMapper.insertSelective(evaluation);
         return index;
     }

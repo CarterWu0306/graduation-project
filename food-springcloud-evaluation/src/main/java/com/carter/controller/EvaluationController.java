@@ -15,9 +15,9 @@ public class EvaluationController {
     @Autowired
     private EvaluationService evaluationServiceImpl;
 
-    @RequestMapping(value = "/appraiseOrder",method = RequestMethod.POST)
-    public int appraiseOrder(@RequestBody String data){
+    @RequestMapping(value = "/addEvaluation",method = RequestMethod.POST)
+    public int addEvaluation(@RequestBody String data){
         Evaluation evaluation = JSON.parseObject(data, Evaluation.class);
-        return evaluationServiceImpl.appraiseOrder(evaluation);
+        return evaluationServiceImpl.addEvaluation(evaluation);
     }
 }
