@@ -146,4 +146,14 @@ public class GoodsController {
             return ResponseBo.error(500,"统计历史商品数量失败");
         }
     }
+
+    @RequestMapping(value = "/sumHotGoods",method = RequestMethod.GET)
+    public ResponseBo sumHotGoods(){
+        try {
+            List<Map<String, Object>> data = goodsServiceImpl.sumHotGoods();
+            return ResponseBo.success(200,"统计热销商品成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"统计热销商品失败");
+        }
+    }
 }

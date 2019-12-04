@@ -24,6 +24,8 @@ public interface GoodsMapper {
 
     List<Map<String, Object>> sumGoods();
 
+    List<Map<String, Object>> sumHotGoods();
+
     Goods selectByPrimaryKey(Integer goodsId);
 
     int updateByExampleSelective(@Param("record") Goods record, @Param("example") GoodsExample example);

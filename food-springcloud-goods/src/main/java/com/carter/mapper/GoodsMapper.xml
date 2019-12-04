@@ -14,6 +14,18 @@
     group by year(create_time), MONTH(create_time)
   </select>
 
+  <resultMap id="SumHotGoodsMap" type="Map" >
+    <result column="sum" property="sum"/>
+    <result column="goods_name" property="goodsName"/>
+  </resultMap>
+
+  <select id="sumHotGoods" resultMap="SumHotGoodsMap">
+    select sum(sale_num) sum,goods_name goodsName
+    from goods
+    group by goods_name
+    order by sale_num desc limit 5
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.Goods" >
     <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />

@@ -24,4 +24,6 @@ public interface GoodsService {
     List<Goods> selAllGoodsList();
 
     List<Map<String, Object>> sumGoods();
+
+    List<Map<String, Object>> sumHotGoods();
 }
