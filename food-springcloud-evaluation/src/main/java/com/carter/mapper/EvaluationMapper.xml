@@ -39,6 +39,16 @@
     order by a.create_time desc
   </select>
 
+  <resultMap id="SumEvaluationMap" type="Map" >
+    <result column="total" property="total"/>
+    <result column="avgScore" property="avgScore"/>
+  </resultMap>
+
+  <select id="sumEvaluation" resultMap="SumEvaluationMap">
+    select count(*) total,avg(order_score) avgScore
+    from evaluation
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.Evaluation" >
     <id column="evaluation_id" property="evaluationId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />

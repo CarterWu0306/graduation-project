@@ -38,4 +38,10 @@ public class EvaluationServiceImpl implements EvaluationService {
         PageInfo<Map<String, Object>> pi = new PageInfo<Map<String, Object>>(list);
         return pi;
     }
+
+    @Override
+    public List<Map<String, Object>> sumEvaluation() {
+        List<Map<String, Object>> list = evaluationMapper.sumEvaluation();
+        return list;
+    }
 }

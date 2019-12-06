@@ -24,6 +24,8 @@ public interface EvaluationMapper {
 
     List<Map<String, Object>> selEvaluationList(@Param("starLevel") String starLevel, @Param("tabType") String tabType, @Param("startDate") String startDate);
 
+    List<Map<String, Object>> sumEvaluation();
+
     int updateByExampleSelective(@Param("record") Evaluation record, @Param("example") EvaluationExample example);
 
     int updateByExample(@Param("record") Evaluation record, @Param("example") EvaluationExample example);
