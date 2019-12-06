@@ -63,7 +63,7 @@ public class EvaluationController {
     public ResponseBo sumEvaluation(){
         try {
             List<Map<String, Object>> list = evaluationServiceImpl.sumEvaluation();
-            return ResponseBo.success(200,"统计评价成功","");
+            return ResponseBo.success(200,"统计评价成功",list);
         } catch (Exception e) {
             return ResponseBo.error(500,"统计评价失败");
         }
