@@ -47,33 +47,37 @@ public class OrderController {
 
     @RequestMapping(value = "getOrderList",method = RequestMethod.GET)
     public ResponseBo getOrderListByParam(int page, int limit, @RequestParam Map<String,Object> map){
-        String tabType = (String)map.get("tabType");
-        String dateRange = (String)map.get("dateRange");
-        String orderSn = (String)map.get("orderSn");
-        String startDate = "";
+        try {
+            String tabType = (String)map.get("tabType");
+            String dateRange = (String)map.get("dateRange");
+            String orderSn = (String)map.get("orderSn");
+            String startDate = "";
 
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
+            Calendar c = Calendar.getInstance();
+            c.setTime(new Date());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //设置时间范围
-        if (!StringUtils.isBlank(dateRange)){
-            if (dateRange.equals("today")){
-                c.set(Calendar.HOUR_OF_DAY, 0);
-                c.set(Calendar.MINUTE, 0);
-                c.set(Calendar.SECOND, 0);
-                startDate = sdf.format(c.getTime());
-            }else if (dateRange.equals("week")){
-                c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)-7);
-                startDate = sdf.format(c.getTime());
-            }else if (dateRange.equals("month")){
-                c.set(Calendar.MONTH, c.get(Calendar.MONTH)-1);
-                startDate = sdf.format(c.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //设置时间范围
+            if (!StringUtils.isBlank(dateRange)){
+                if (dateRange.equals("today")){
+                    c.set(Calendar.HOUR_OF_DAY, 0);
+                    c.set(Calendar.MINUTE, 0);
+                    c.set(Calendar.SECOND, 0);
+                    startDate = sdf.format(c.getTime());
+                }else if (dateRange.equals("week")){
+                    c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)-7);
+                    startDate = sdf.format(c.getTime());
+                }else if (dateRange.equals("month")){
+                    c.set(Calendar.MONTH, c.get(Calendar.MONTH)-1);
+                    startDate = sdf.format(c.getTime());
+                }
             }
-        }
 
-        PageInfo<Map<String, Object>> pi = orderServiceImpl.getOrderListByParam(page, limit, orderSn, tabType, startDate);
-        return ResponseBo.list(200,"ok",pi.getTotal(),pi.getList());
+            PageInfo<Map<String, Object>> pi = orderServiceImpl.getOrderListByParam(page, limit, orderSn, tabType, startDate);
+            return ResponseBo.list(200,"查询订单成功",pi.getTotal(),pi.getList());
+        } catch (Exception e) {
+            return ResponseBo.list(500,"查询订单失败",0,null);
+        }
     }
 
     @RequestMapping(value = "getAllOrders",method = RequestMethod.GET)
