@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.carter.mapper.EvaluationMapper" >
+  <resultMap id="BaseEvaluationResultMap" type="com.carter.pojo.Evaluation" >
+    <id column="evaluation_id" property="evaluationId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_score" property="orderScore" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="is_reply" property="isReply" jdbcType="CHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+    <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selEvaluationList" resultMap="BaseEvaluationResultMap" parameterType="java.lang.String">
+    select a.*,b.order_sn,c.nick_name
+    from evaluation a
+    left join the_order b on a.order_id = b.order_id
+    left join user c on a.user_id = c.user_id
+    <where>
+      <if test="starLevel =='lowLevel'">
+        and a.order_score &lt;= 3
+      </if>
+      <if test="starLevel =='highLevel'">
+        and a.order_score &gt; 3
+      </if>
+      <if test="tabType =='NoReplyEvaluation'">
+        and a.is_reply = '0'
+      </if>
+      <if test="startDate !=null and startDate != ''">
+        and a.create_time &gt;= #{startDate}
+      </if>
+    </where>
+    order by a.create_time desc
+  </select>
+
   <resultMap id="BaseResultMap" type="com.carter.pojo.Evaluation" >
     <id column="evaluation_id" property="evaluationId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />

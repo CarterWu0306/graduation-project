@@ -5,6 +5,7 @@ import com.carter.pojo.EvaluationExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EvaluationMapper {
     int countByExample(EvaluationExample example);
@@ -20,6 +21,8 @@ public interface EvaluationMapper {
     List<Evaluation> selectByExample(EvaluationExample example);
 
     Evaluation selectByPrimaryKey(Integer evaluationId);
+
+    List<Map<String, Object>> selEvaluationList(@Param("starLevel") String starLevel, @Param("tabType") String tabType, @Param("startDate") String startDate);
 
     int updateByExampleSelective(@Param("record") Evaluation record, @Param("example") EvaluationExample example);
 
