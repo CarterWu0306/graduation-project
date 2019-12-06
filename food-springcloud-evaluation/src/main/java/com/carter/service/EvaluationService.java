@@ -12,4 +12,6 @@ public interface EvaluationService {
     PageInfo<Map<String, Object>> getEvaluationListByParam(int page, int limit, String starLevel, String tabType, String startDate);
 
     Map<String, Object> sumEvaluation();
+
+    int deleteEvaluation(int evaluationId);
 }

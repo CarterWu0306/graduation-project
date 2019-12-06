@@ -44,4 +44,10 @@ public class EvaluationServiceImpl implements EvaluationService {
         Map<String, Object> map = evaluationMapper.sumEvaluation();
         return map;
     }
+
+    @Override
+    public int deleteEvaluation(int evaluationId) {
+        int index = evaluationMapper.deleteByPrimaryKey(evaluationId);
+        return index;
+    }
 }

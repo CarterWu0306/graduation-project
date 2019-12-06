@@ -66,6 +66,15 @@ public class EvaluationController {
         } catch (Exception e) {
             return ResponseBo.error(500,"统计评价失败");
         }
+    }
 
+    @RequestMapping(value = "deleteEvaluation",method = RequestMethod.POST)
+    public ResponseBo deleteEvaluation(@RequestParam(value = "evaluationId") int evaluationId){
+        try {
+            int index = evaluationServiceImpl.deleteEvaluation(evaluationId);
+            return ResponseBo.success(200,"删除评价成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"删除评价失败");
+        }
     }
 }
