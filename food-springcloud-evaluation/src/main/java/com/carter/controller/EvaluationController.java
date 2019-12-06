@@ -41,12 +41,7 @@ public class EvaluationController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //设置时间范围
             if (!StringUtils.isBlank(dateRange)){
-                if (dateRange.equals("today")){
-                    c.set(Calendar.HOUR_OF_DAY, 0);
-                    c.set(Calendar.MINUTE, 0);
-                    c.set(Calendar.SECOND, 0);
-                    startDate = sdf.format(c.getTime());
-                }else if (dateRange.equals("week")){
+                if (dateRange.equals("week")){
                     c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)-7);
                     startDate = sdf.format(c.getTime());
                 }else if (dateRange.equals("month")){
@@ -58,6 +53,7 @@ public class EvaluationController {
             PageInfo<Map<String, Object>> pi = evaluationServiceImpl.getEvaluationListByParam(page, limit, starLevel, tabType, startDate);
             return ResponseBo.list(200,"查询评价列表成功",pi.getTotal(),pi.getList());
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseBo.list(500,"查询评价列表失败",0,null);
         }
     }
