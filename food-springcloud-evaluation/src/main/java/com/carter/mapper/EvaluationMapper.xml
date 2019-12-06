@@ -24,10 +24,10 @@
     left join user c on a.user_id = c.user_id
     <where>
       <if test="starLevel =='lowLevel'">
-        and a.order_score &lt;= 3
+        and a.order_score &lt;= 4
       </if>
       <if test="starLevel =='highLevel'">
-        and a.order_score &gt; 3
+        and a.order_score &gt; 4
       </if>
       <if test="tabType =='NoReplyEvaluation'">
         and a.is_reply = '0'
