@@ -38,16 +38,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @LcnTransaction
-    @Transactional(rollbackFor = Exception.class)
     public PageInfo<Map<String, Object>> getOrderListByParam(int page, int limit, String orderSn, String tabType, String startDate) {
         PageHelper.startPage(page,limit);
 
-        List<Map<String, Object>> maps = theOrderMapper.selOrderList(orderSn, tabType, startDate);
+        List<Map<String, Object>> list = theOrderMapper.selOrderList(orderSn, tabType, startDate);
 
         //分页代码
         //设置分页条件
-        PageInfo<Map<String, Object>> pi = new PageInfo<Map<String, Object>>(maps);
+        PageInfo<Map<String, Object>> pi = new PageInfo<Map<String, Object>>(list);
         return pi;
     }
 
