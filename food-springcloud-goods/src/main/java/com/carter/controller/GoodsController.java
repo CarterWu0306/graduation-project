@@ -123,7 +123,7 @@ public class GoodsController {
             PageInfo<Goods> pi = goodsServiceImpl.selGoodsListByParam(page, limit, map);
             return ResponseBo.list(200,"查询商品列表成功",pi.getTotal(),pi.getList());
         } catch (Exception e) {
-            return ResponseBo.error(500,"查询商品列表失败");
+            return ResponseBo.list(500,"查询商品列表失败",0,null);
         }
     }
 

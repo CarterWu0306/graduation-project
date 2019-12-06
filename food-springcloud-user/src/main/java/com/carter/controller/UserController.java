@@ -35,7 +35,7 @@ public class UserController {
             PageInfo<Map<String, Object>> pi = userServiceImpl.getUserList(page, limit, map);
             return ResponseBo.list(200,"查询用户列表成功",pi.getTotal(),pi.getList());
         } catch (Exception e) {
-            return ResponseBo.error(500,"查询用户失败");
+            return ResponseBo.list(500,"查询用户列表失败",0,null);
         }
     }
 
