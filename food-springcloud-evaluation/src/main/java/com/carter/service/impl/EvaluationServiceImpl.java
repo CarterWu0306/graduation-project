@@ -40,8 +40,8 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public List<Map<String, Object>> sumEvaluation() {
-        List<Map<String, Object>> list = evaluationMapper.sumEvaluation();
-        return list;
+    public Map<String, Object> sumEvaluation() {
+        Map<String, Object> map = evaluationMapper.sumEvaluation();
+        return map;
     }
 }

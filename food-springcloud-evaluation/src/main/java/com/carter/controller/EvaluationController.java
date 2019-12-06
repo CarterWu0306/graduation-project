@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -62,8 +61,8 @@ public class EvaluationController {
     @RequestMapping(value = "sumEvaluation",method = RequestMethod.GET)
     public ResponseBo sumEvaluation(){
         try {
-            List<Map<String, Object>> list = evaluationServiceImpl.sumEvaluation();
-            return ResponseBo.success(200,"统计评价成功",list);
+            Map<String, Object> map = evaluationServiceImpl.sumEvaluation();
+            return ResponseBo.success(200,"统计评价成功",map);
         } catch (Exception e) {
             return ResponseBo.error(500,"统计评价失败");
         }
