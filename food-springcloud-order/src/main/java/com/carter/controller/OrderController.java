@@ -7,6 +7,7 @@ import com.carter.pojo.OrderGoods;
 import com.carter.pojo.TheOrder;
 import com.carter.service.OrderService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +57,7 @@ public class OrderController {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //设置时间范围
-        if (dateRange!=null&&!dateRange.equals("")){
+        if (!StringUtils.isBlank(dateRange)){
             if (dateRange.equals("today")){
                 c.set(Calendar.HOUR_OF_DAY, 0);
                 c.set(Calendar.MINUTE, 0);
