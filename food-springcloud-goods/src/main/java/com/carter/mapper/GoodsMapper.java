@@ -22,6 +22,8 @@ public interface GoodsMapper {
 
     List<Goods> selectByExample(GoodsExample example);
 
+    List<String> selGoodsLabel();
+
     List<Map<String, Object>> sumGoods();
 
     List<Map<String, Object>> sumHotGoods();

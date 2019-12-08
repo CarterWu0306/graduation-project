@@ -26,4 +26,6 @@ public interface GoodsService {
     List<Map<String, Object>> sumGoods();
 
     List<Map<String, Object>> sumHotGoods();
+
+    List<String> selGoodsLabel();
 }

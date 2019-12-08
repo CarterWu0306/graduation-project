@@ -137,6 +137,17 @@ public class GoodsController {
         }
     }
 
+    @RequestMapping(value = "/selGoodsLabel",method = RequestMethod.GET)
+    public ResponseBo selGoodsLabel(){
+        try {
+            List<String> labelList = goodsServiceImpl.selGoodsLabel();
+            return ResponseBo.success(200,"查询商品标签成功",labelList);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"查询商品标签失败");
+        }
+    }
+
+
     @RequestMapping(value = "/sumGoods",method = RequestMethod.GET)
     public ResponseBo sumGoods(){
         try {

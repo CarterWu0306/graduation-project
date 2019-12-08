@@ -122,4 +122,10 @@ public class GoodsServiceImpl implements GoodsService {
         List<Map<String, Object>> list = goodsMapper.sumHotGoods();
         return list;
     }
+
+    @Override
+    public List<String> selGoodsLabel() {
+        List<String> labelList = goodsMapper.selGoodsLabel();
+        return labelList;
+    }
 }
