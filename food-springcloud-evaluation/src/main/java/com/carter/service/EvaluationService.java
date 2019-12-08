@@ -14,4 +14,6 @@ public interface EvaluationService {
     Map<String, Object> sumEvaluation();
 
     int deleteEvaluation(int evaluationId);
+
+    int reply(Evaluation evaluation);
 }

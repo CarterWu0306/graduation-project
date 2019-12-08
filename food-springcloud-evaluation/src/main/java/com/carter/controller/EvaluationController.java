@@ -77,4 +77,14 @@ public class EvaluationController {
             return ResponseBo.error(500,"删除评价失败");
         }
     }
+
+    @RequestMapping(value = "reply",method = RequestMethod.POST)
+    public ResponseBo reply(@RequestBody Evaluation evaluation){
+        try {
+            evaluationServiceImpl.reply(evaluation);
+            return ResponseBo.success(200,"回复评价成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"回复评价失败");
+        }
+    }
 }

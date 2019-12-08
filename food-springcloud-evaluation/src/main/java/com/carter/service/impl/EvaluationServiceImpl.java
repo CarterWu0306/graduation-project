@@ -50,4 +50,10 @@ public class EvaluationServiceImpl implements EvaluationService {
         int index = evaluationMapper.deleteByPrimaryKey(evaluationId);
         return index;
     }
+
+    @Override
+    public int reply(Evaluation evaluation) {
+        int index = evaluationMapper.updateByPrimaryKeySelective(evaluation);
+        return index;
+    }
 }
