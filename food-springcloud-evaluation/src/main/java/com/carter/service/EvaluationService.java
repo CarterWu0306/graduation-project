@@ -11,7 +11,7 @@ public interface EvaluationService {
 
     PageInfo<Map<String, Object>> getEvaluationListByParam(int page, int limit, String starLevel, String tabType, String startDate);
 
-    List<Evaluation> getEvaluationByParam(String starLevel);
+    List<Map<String, Object>> getEvaluationByParam(String starLevel);
 
     Map<String, Object> sumEvaluation();
 

@@ -42,20 +42,10 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public List<Evaluation> getEvaluationByParam(String starLevel) {
-        EvaluationExample evaluationExample = new EvaluationExample();
-        EvaluationExample.Criteria criteria = evaluationExample.createCriteria();
+    public List<Map<String, Object>> getEvaluationByParam(String starLevel) {
+        List<Map<String, Object>> list = evaluationMapper.selEvaluationList(starLevel, "", "");
 
-        if (!StringUtils.isBlank(starLevel)){
-            if (starLevel.equals("highLevel")){
-                criteria.andOrderScoreGreaterThan(4);
-            }else if (starLevel.equals("lowLevel")){
-                criteria.andOrderScoreLessThan(4);
-            }
-        }
-
-        List<Evaluation> evaluationsList = evaluationMapper.selectByExample(evaluationExample);
-        return evaluationsList;
+        return list;
     }
 
     @Override

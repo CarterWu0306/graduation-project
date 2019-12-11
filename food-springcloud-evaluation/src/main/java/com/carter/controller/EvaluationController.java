@@ -63,8 +63,8 @@ public class EvaluationController {
     public ResponseBo getAllEvaluationByParam(@RequestParam Map<String,Object> map){
         try {
             String starLevel = (String)map.get("starLevel");
-            List<Evaluation> evaluationList = evaluationServiceImpl.getEvaluationByParam(starLevel);
-            return ResponseBo.success(200,"查询全部评价成功",evaluationList);
+            List<Map<String, Object>> data = evaluationServiceImpl.getEvaluationByParam(starLevel);
+            return ResponseBo.success(200,"查询全部评价成功",data);
         } catch (Exception e) {
             return ResponseBo.error(500,"查询全部评价失败");
         }
