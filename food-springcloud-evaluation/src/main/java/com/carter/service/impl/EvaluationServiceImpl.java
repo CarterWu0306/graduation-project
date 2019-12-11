@@ -2,10 +2,12 @@ package com.carter.service.impl;
 
 import com.carter.mapper.EvaluationMapper;
 import com.carter.pojo.Evaluation;
+import com.carter.pojo.EvaluationExample;
 import com.carter.service.EvaluationService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,23 @@ public class EvaluationServiceImpl implements EvaluationService {
         //设置分页条件
         PageInfo<Map<String, Object>> pi = new PageInfo<Map<String, Object>>(list);
         return pi;
+    }
+
+    @Override
+    public List<Evaluation> getEvaluationByParam(String starLevel) {
+        EvaluationExample evaluationExample = new EvaluationExample();
+        EvaluationExample.Criteria criteria = evaluationExample.createCriteria();
+
+        if (!StringUtils.isBlank(starLevel)){
+            if (starLevel.equals("highLevel")){
+                criteria.andOrderScoreGreaterThan(4);
+            }else if (starLevel.equals("lowLevel")){
+                criteria.andOrderScoreLessThan(4);
+            }
+        }
+
+        List<Evaluation> evaluationsList = evaluationMapper.selectByExample(evaluationExample);
+        return evaluationsList;
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,6 +56,17 @@ public class EvaluationController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseBo.list(500,"查询评价列表失败",0,null);
+        }
+    }
+
+    @RequestMapping(value = "getAllEvaluationByParam",method = RequestMethod.GET)
+    public ResponseBo getAllEvaluationByParam(@RequestParam Map<String,Object> map){
+        try {
+            String starLevel = (String)map.get("starLevel");
+            List<Evaluation> evaluationList = evaluationServiceImpl.getEvaluationByParam(starLevel);
+            return ResponseBo.success(200,"查询全部评价成功",evaluationList);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"查询全部评价失败");
         }
     }
 
