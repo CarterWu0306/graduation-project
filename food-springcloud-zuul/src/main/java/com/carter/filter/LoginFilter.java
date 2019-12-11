@@ -68,6 +68,10 @@ public class LoginFilter extends ZuulFilter {
             return false;
         } else if ("/food-goods/goods/selGoodsLabel".equalsIgnoreCase(request.getRequestURI())) {
             return false;
+        } else if ("/food-evaluation/evaluation/sumEvaluation".equalsIgnoreCase(request.getRequestURI())) {
+            return false;
+        } else if ("/food-evaluation/evaluation/getAllEvaluationByParam".equalsIgnoreCase(request.getRequestURI())) {
+            return false;
         }
         return true;
     }
