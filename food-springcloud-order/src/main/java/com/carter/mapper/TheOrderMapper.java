@@ -22,6 +22,8 @@ public interface TheOrderMapper {
 
     List<Map<String,Object>> selOrderList(@Param("orderSn") String orderSn, @Param("tabType") String tabType, @Param("startDate") String startDate);
 
+    List<Map<String,Object>> selOrderListByUser(@Param("userId") Integer userId, @Param("tabType") String tabType);
+
     List<Map<String, Object>> sumOrder();
 
     List<Map<String, Object>> sumSales();

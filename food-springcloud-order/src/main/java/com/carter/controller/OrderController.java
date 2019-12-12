@@ -90,6 +90,17 @@ public class OrderController {
         }
     }
 
+    @RequestMapping(value = "getOrdersByParam",method = RequestMethod.GET)
+    public ResponseBo getOrdersByParam(int userId, String tabType){
+        try {
+            System.out.println("userId:"+userId+"   tabType:"+tabType);
+            List<Map<String, Object>> data = orderServiceImpl.getOrdersByParam(userId,tabType);
+            return ResponseBo.success(200,"用户查询订单成功",data);
+        } catch (Exception e) {
+            return ResponseBo.error(500,"用户查询订单失败");
+        }
+    }
+
     @RequestMapping(value = "completeOrder",method = RequestMethod.POST)
     public ResponseBo completeOrder(@RequestBody TheOrder order){
         try {

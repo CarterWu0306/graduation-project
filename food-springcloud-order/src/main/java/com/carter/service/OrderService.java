@@ -14,6 +14,8 @@ public interface OrderService {
 
     List<Map<String, Object>> getAllOrders();
 
+    List<Map<String, Object>> getOrdersByParam(Integer userId, String tabType);
+
     TheOrder getOrderByOrderId(Integer orderId);
 
     int changeOrderStatus(TheOrder order);

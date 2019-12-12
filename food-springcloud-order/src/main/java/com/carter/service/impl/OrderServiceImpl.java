@@ -56,6 +56,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Map<String, Object>> getOrdersByParam(Integer userId, String tabType) {
+        List<Map<String, Object>> list = theOrderMapper.selOrderListByUser(userId,tabType);
+        return list;
+    }
+
+    @Override
     public TheOrder getOrderByOrderId(Integer orderId) {
         return theOrderMapper.selectByPrimaryKey(orderId);
     }

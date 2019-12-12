@@ -45,6 +45,21 @@
     order by order_create_time desc
   </select>
 
+  <select id="selOrderListByUser" resultMap="BaseOrderResultMap" parameterType="java.lang.String">
+    select the_order.*,user.nick_name,user.real_name
+    from the_order
+    left join user on user.user_id=the_order.user_id
+    <where>
+      <if test="userId !=null and userId != ''">
+        and the_order.user_id = #{userId}
+      </if>
+      <if test="tabType =='PendingOrders'">
+        and the_order.order_status in ('-1','0')
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+
   <resultMap id="SumOrderMap" type="Map" >
     <result column="sum" property="sum"/>
     <result column="year" property="year"/>
