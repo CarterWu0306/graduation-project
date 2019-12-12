@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.carter.common.ResponseBo;
 import com.carter.pojo.Evaluation;
 import com.carter.service.EvaluationService;
+import com.carter.service.ImageService;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +24,8 @@ public class EvaluationController {
 
     @Autowired
     private EvaluationService evaluationServiceImpl;
+    @Autowired
+    private ImageService imageServiceImpl;
 
     @RequestMapping(value = "/addEvaluation",method = RequestMethod.POST)
     public int addEvaluation(@RequestBody String data){
@@ -98,5 +103,18 @@ public class EvaluationController {
         } catch (Exception e) {
             return ResponseBo.error(500,"回复评价失败");
         }
+    }
+
+    @RequestMapping(value = "/uploadImage",method = RequestMethod.POST)
+    public ResponseBo uploadImage(@RequestParam(value = "file") MultipartFile mfile){
+        try {
+            String uploadResult = imageServiceImpl.uploadImage(mfile,"http://images.wukate.com/defaultEvaluation.jpg");
+            if (uploadResult!="http://images.wukate.com/defaultEvaluation.jpg"){
+                return ResponseBo.success(200,"上传成功",uploadResult);
+            }
+        } catch (IOException e) {
+            return ResponseBo.error(500,"上传失败");
+        }
+        return ResponseBo.error(500,"上传失败");
     }
 }
