@@ -138,7 +138,7 @@ public class UserController {
         JSONObject jsonObject = JSONObject.parseObject(data);
         Integer userId = (Integer)jsonObject.get("userId");
         String realTotalMoney = (String)jsonObject.get("realTotalMoney");
-        int score = (Double.valueOf(realTotalMoney).intValue())/10;
+        int score = (Double.valueOf(realTotalMoney).intValue());
         return userServiceImpl.addUserScore(userId, score);
     }
 
