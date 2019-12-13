@@ -42,4 +42,15 @@ public class PlaceOrderServiceImpl implements PlaceOrderService {
         index += userFeignClient.decreaseUserScore(data);
         return index;
     }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int payOrder(String data) {
+        //改变订单状态
+        int index = orderFeignClient.payOrder(data);
+        //增加用户积分
+        index += userFeignClient.addUserScore(data);
+        return index;
+    }
 }

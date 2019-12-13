@@ -32,4 +32,14 @@ public class PlaceOrderController {
             return ResponseBo.error(500,"下单失败");
         }
     }
+
+    @RequestMapping(value = "payOrder",method = RequestMethod.POST)
+    public ResponseBo payOrder(@RequestBody String data){
+        try {
+            int index = placeOrderServiceImpl.payOrder(data);
+            return ResponseBo.success(200,"支付成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"支付失败");
+        }
+    }
 }

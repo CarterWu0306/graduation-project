@@ -118,7 +118,6 @@ public class OrderController {
     @RequestMapping(value = "getOrdersByParam",method = RequestMethod.GET)
     public ResponseBo getOrdersByParam(int userId, String tabType){
         try {
-            System.out.println("userId:"+userId+"   tabType:"+tabType);
             List<Map<String, Object>> data = orderServiceImpl.getOrdersByParam(userId,tabType);
             return ResponseBo.success(200,"用户查询订单成功",data);
         } catch (Exception e) {
@@ -135,6 +134,17 @@ public class OrderController {
         } catch (Exception e) {
             return ResponseBo.error(500,"完成订单失败");
         }
+    }
+
+    @RequestMapping(value = "payOrder",method = RequestMethod.POST)
+    public int payOrder(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer orderId = (Integer)jsonObject.get("orderId");
+        TheOrder order = new TheOrder();
+        order.setOrderId(orderId);
+        order.setOrderStatus("0");
+        order.setPayStatus("1");
+        return orderServiceImpl.changeOrderStatus(order);
     }
 
     @RequestMapping(value = "changeOrderStatusToAppraised",method = RequestMethod.POST)

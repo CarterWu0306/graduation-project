@@ -16,4 +16,7 @@ public interface OrderFeignClient {
 
     @RequestMapping(value = "order/changeOrderStatusToAppraised",method = RequestMethod.POST)
     int changeOrderStatusToAppraised(@RequestBody String data);
+
+    @RequestMapping(value = "order/payOrder",method = RequestMethod.POST)
+    int payOrder(@RequestBody String data);
 }

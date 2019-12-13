@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserFeignClient {
 
     @RequestMapping(value = "user/addUserScore",method = RequestMethod.POST)
-    int addUserScore(@RequestParam(value = "userId") Integer userId,
-                     @RequestParam(value = "score")Integer score);
+    int addUserScore(@RequestBody String data);
 
     @RequestMapping(value = "user/decreaseUserScore",method = RequestMethod.POST)
     int decreaseUserScore(@RequestBody String data);

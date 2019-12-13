@@ -134,8 +134,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUserScore",method = RequestMethod.POST)
-    public int addUserScore(@RequestParam(value = "userId") Integer userId,
-                            @RequestParam(value = "score")Integer score){
+    public int addUserScore(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userId = (Integer)jsonObject.get("userId");
+        String realTotalMoney = (String)jsonObject.get("realTotalMoney");
+        int score = (Double.valueOf(realTotalMoney).intValue())/10;
         return userServiceImpl.addUserScore(userId, score);
     }
 
