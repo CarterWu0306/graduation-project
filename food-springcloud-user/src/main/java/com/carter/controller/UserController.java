@@ -150,6 +150,14 @@ public class UserController {
         return userServiceImpl.decreaseUserScore(userId, deductionScore);
     }
 
+    @RequestMapping(value = "/addFlashScore",method = RequestMethod.POST)
+    public int addFlashScore(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userId = (Integer)jsonObject.get("userId");
+        Integer score = (Integer)jsonObject.get("score");
+        return userServiceImpl.addUserScore(userId, score);
+    }
+
     @RequestMapping(value = "/sumNewUser",method = RequestMethod.GET)
     public ResponseBo sumNewUser(){
         try {
