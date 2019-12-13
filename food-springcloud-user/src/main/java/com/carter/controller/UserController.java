@@ -140,9 +140,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/decreaseUserScore",method = RequestMethod.POST)
-    public int decreaseUserScore(@RequestParam(value = "userId") Integer userId,
-                            @RequestParam(value = "score")Integer score){
-        return userServiceImpl.decreaseUserScore(userId, score);
+    public int decreaseUserScore(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userId = (Integer)jsonObject.get("userId");
+        Integer deductionScore = (Integer)jsonObject.get("deductionScore");
+        return userServiceImpl.decreaseUserScore(userId, deductionScore);
     }
 
     @RequestMapping(value = "/sumNewUser",method = RequestMethod.GET)

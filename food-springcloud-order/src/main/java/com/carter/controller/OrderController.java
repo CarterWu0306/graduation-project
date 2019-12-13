@@ -45,6 +45,31 @@ public class OrderController {
         return orderServiceImpl.addOrderByAdmin(theOrder,goodsList);
     }
 
+    @RequestMapping(value = "/addOrderByUser",method = RequestMethod.POST)
+    public int addOrderByUser(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        Integer userId = (Integer)jsonObject.get("userId");
+        String totalMoney = (String)jsonObject.get("totalMoney");
+        String realTotalMoney = (String)jsonObject.get("realTotalMoney");
+        Integer deductionScore = (Integer)jsonObject.get("deductionScore");
+
+        List<OrderGoods> goodsList = JSONArray.parseArray(jsonObject.get("goodsList").toString(), OrderGoods.class);
+
+        TheOrder theOrder = new TheOrder();
+        theOrder.setOrderSn(UUID.randomUUID().toString());
+        theOrder.setUserId(userId);
+        theOrder.setTotalMoney(new BigDecimal(totalMoney));
+        theOrder.setRealTotalMoney(new BigDecimal(realTotalMoney));
+        theOrder.setDeductionScore(deductionScore);
+        theOrder.setOrderStatus("-1");
+        theOrder.setPayStatus("0");
+        theOrder.setOrderCreateTime(new Date());
+        theOrder.setOrderPayTime(new Date());
+
+        return orderServiceImpl.addOrderByAdmin(theOrder,goodsList);
+    }
+
+
     @RequestMapping(value = "getOrderList",method = RequestMethod.GET)
     public ResponseBo getOrderListByParam(int page, int limit, @RequestParam Map<String,Object> map){
         try {

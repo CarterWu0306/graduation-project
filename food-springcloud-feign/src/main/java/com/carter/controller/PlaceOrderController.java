@@ -22,4 +22,14 @@ public class PlaceOrderController {
             return ResponseBo.error(500,"下单失败");
         }
     }
+
+    @RequestMapping(value = "placeOrderByUser",method = RequestMethod.POST)
+    public ResponseBo placeOrderByUser(@RequestBody String data){
+        try {
+            int index = placeOrderServiceImpl.placeOrderByUser(data);
+            return ResponseBo.success(200,"下单成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"下单失败");
+        }
+    }
 }
