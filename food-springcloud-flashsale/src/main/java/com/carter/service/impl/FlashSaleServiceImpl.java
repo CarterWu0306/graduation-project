@@ -5,15 +5,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.carter.feign.UserFeignClient;
 import com.carter.mapper.FlashSaleMapper;
 import com.carter.pojo.FlashSale;
+import com.carter.pojo.FlashSaleExample;
 import com.carter.service.FlashSaleService;
 import com.carter.utils.RedisUtil;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,6 +39,29 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         //redis缓存秒杀信息
         index += redisUtil.set("flashSale-"+flashSale.getFlashSaleId(),flashSale.getStock());
         return index;
+    }
+
+    @Override
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteFlashSale(Integer flashSaleId) {
+        //删除数据库秒杀信息
+        int index = flashSaleMapper.deleteByPrimaryKey(flashSaleId);
+        //删除redis秒杀信息
+        index += redisUtil.remove("flashSale-"+flashSaleId);
+        return index;
+    }
+
+    @Override
+    public PageInfo<FlashSale> getFlashSaleList(int page, int limit) {
+        PageHelper.startPage(page,limit);
+
+        List<FlashSale> flashSaleList = flashSaleMapper.selectByExample(new FlashSaleExample());
+
+        //分页代码
+        //设置分页条件
+        PageInfo<FlashSale> pi = new PageInfo<>(flashSaleList);
+        return pi;
     }
 
     @Override

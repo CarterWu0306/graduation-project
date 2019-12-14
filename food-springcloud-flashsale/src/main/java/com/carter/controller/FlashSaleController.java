@@ -6,11 +6,9 @@ import com.carter.pojo.FlashSale;
 import com.carter.rabbitmq.FlashSaleSender;
 import com.carter.service.FlashSaleService;
 import com.carter.utils.RedisUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("flashSale")
@@ -33,6 +31,26 @@ public class FlashSaleController {
         }
     }
 
+    @RequestMapping(value = "getFlashSaleList",method = RequestMethod.GET)
+    public ResponseBo getFlashSaleList(int page, int limit){
+        try {
+            PageInfo<FlashSale> pi = flashSaleServiceImpl.getFlashSaleList(page, limit);
+            return ResponseBo.list(200,"查询秒杀列表成功",pi.getTotal(),pi.getList());
+        } catch (Exception e) {
+            return ResponseBo.list(500,"查询秒杀列表失败",0,null);
+        }
+    }
+
+    @RequestMapping(value = "deleteFlashSale",method = RequestMethod.GET)
+    public ResponseBo deleteFlashSale(Integer flashSaleId){
+        try {
+            int index = flashSaleServiceImpl.deleteFlashSale(flashSaleId);
+            return ResponseBo.success(200,"删除秒杀活动成功","");
+        } catch (Exception e) {
+            return ResponseBo.error(500,"删除秒杀活动失败");
+        }
+    }
+
     @RequestMapping(value = "rush",method = RequestMethod.POST)
     public ResponseBo rush(@RequestBody String data){
         try {
@@ -43,7 +61,7 @@ public class FlashSaleController {
             Integer stock = (Integer)redisUtil.get("flashSale-" + flashSaleId);
             if (stock>0){
                 if(redisUtil.get(key)!=null){
-                    return ResponseBo.error(222,"该活动只限参加一次");
+                    return ResponseBo.error(500,"该活动只限参加一次");
                 }else{
                     flashSaleSender.send(data);
                     //减少redis缓存中库存
@@ -53,7 +71,7 @@ public class FlashSaleController {
                     return ResponseBo.success(200,"秒杀成功","");
                 }
             }else{
-                return ResponseBo.error(111,"已被抢光");
+                return ResponseBo.error(500,"已被抢光");
             }
         } catch (Exception e) {
             return ResponseBo.error(500,"秒杀失败");
