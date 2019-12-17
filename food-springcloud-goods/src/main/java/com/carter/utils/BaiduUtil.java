@@ -37,7 +37,7 @@ public class BaiduUtil {
      * @param ak - 百度云官网获取的 API Key
      * @param sk - 百度云官网获取的 Securet Key
      * @return assess_token 示例：
-     * "24.460da4889caad24cccdb1fea17221975.2592000.1491995545.282335-1234567"
+     * "24.cc6c04ebc892819ee9c04bd5784da76d.2592000.1579180680.282335-17494867"
      */
     public static String getAuth(String ak, String sk) {
         // 获取token地址

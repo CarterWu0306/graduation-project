@@ -29,7 +29,7 @@ public class ImageServiceImpl implements ImageService {
 
                 String param = "image=" + imgParam;
 
-                String accessToken = "24.2ff17a8f10781d8d7ef9269a3f984d3f.2592000.1577778831.282335-17494867";
+                String accessToken = "24.cc6c04ebc892819ee9c04bd5784da76d.2592000.1579180680.282335-17494867";
 
                 String result = HttpUtil.post(url, accessToken, param);
                 return result;
