@@ -64,6 +64,10 @@ public class LoginFilter extends ZuulFilter {
             return false;
         } else if ("/food-user/user/logout".equalsIgnoreCase(request.getRequestURI())) {
             return false;
+        } else if ("/food-user/user/uploadUserImage".equalsIgnoreCase(request.getRequestURI())) {
+            return false;
+        } else if ("/food-user/user/addUser".equalsIgnoreCase(request.getRequestURI())) {
+            return false;
         } else if ("/food-goods/goods/selAllGoodsList".equalsIgnoreCase(request.getRequestURI())) {
             return false;
         } else if ("/food-goods/goods/selGoodsLabel".equalsIgnoreCase(request.getRequestURI())) {
