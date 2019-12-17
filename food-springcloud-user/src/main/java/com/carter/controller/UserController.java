@@ -56,7 +56,7 @@ public class UserController {
                 int index = userServiceImpl.addUser(user,userType);
                 return ResponseBo.success(200,"新增用户成功","");
             }else{
-                return ResponseBo.error(200,"用户名已存在");
+                return ResponseBo.error(500,"用户名已存在");
             }
         } catch (Exception e) {
             return ResponseBo.error(500,"新增用户失败");
