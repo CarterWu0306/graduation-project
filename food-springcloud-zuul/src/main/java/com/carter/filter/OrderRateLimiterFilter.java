@@ -50,7 +50,7 @@ public class OrderRateLimiterFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
 
-        //就相当于每调用一次tryAcquire()方法，令牌数量减1，当1000个用完后，那么后面进来的用户无法访问上面接口
+        //就相当于每调用一次tryAcquire()方法，令牌数量减1，当100个用完后，那么后面进来的用户无法访问上面接口
         //当然这里只写类上面一个接口，可以这么写，实际可以在这里要加一层接口判断。
         if (!RATE_LIMITER.tryAcquire()) {
             requestContext.setSendZuulResponse(false);
