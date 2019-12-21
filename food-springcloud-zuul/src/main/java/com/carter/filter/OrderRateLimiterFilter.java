@@ -21,8 +21,8 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 public class OrderRateLimiterFilter extends ZuulFilter {
 
 
-    //每秒产生1000个令牌
-    private static final RateLimiter RATE_LIMITER = RateLimiter.create(1000);
+    //每秒产生100个令牌
+    private static final RateLimiter RATE_LIMITER = RateLimiter.create(100);
 
     @Override
     public String filterType() {
