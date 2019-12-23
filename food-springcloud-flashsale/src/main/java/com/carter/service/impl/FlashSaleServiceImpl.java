@@ -75,7 +75,7 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         //减少数据库秒杀活动库存
         Integer stock = (Integer)redisUtil.get("flashSale-" + flashSaleId);
         FlashSale flashSale = flashSaleMapper.selectByPrimaryKey(flashSaleId);
-        flashSale.setStock(stock);
+        flashSale.setStock(flashSale.getStock()-1);
         int index = flashSaleMapper.updateByPrimaryKeySelective(flashSale);
 
         //增加用户积分
