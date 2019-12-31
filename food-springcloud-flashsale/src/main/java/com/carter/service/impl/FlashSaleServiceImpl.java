@@ -33,12 +33,14 @@ public class FlashSaleServiceImpl implements FlashSaleService {
     @Override
     @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
-    public int addFlashSale(FlashSale flashSale) {
+    public void addFlashSale(FlashSale flashSale) {
         //数据库新增秒杀信息
         int index = flashSaleMapper.insertSelective(flashSale);
+        Integer stock = flashSale.getStock();
         //redis缓存秒杀信息
-        index += redisUtil.set("flashSale-"+flashSale.getFlashSaleId(),flashSale.getStock());
-        return index;
+        for (int i=0;i<stock;i++){
+            redisUtil.lPush("flashSale-"+flashSale.getFlashSaleId(),stock);
+        }
     }
 
     @Override

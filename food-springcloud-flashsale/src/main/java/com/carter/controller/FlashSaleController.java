@@ -24,7 +24,7 @@ public class FlashSaleController {
     @RequestMapping(value = "addFlashSale",method = RequestMethod.POST)
     public ResponseBo addFlashSale(@RequestBody FlashSale flashSale){
         try {
-            int index = flashSaleServiceImpl.addFlashSale(flashSale);
+            flashSaleServiceImpl.addFlashSale(flashSale);
             return ResponseBo.success(200,"新增秒杀活动成功","");
         } catch (Exception e) {
             return ResponseBo.error(500,"新增秒杀活动失败");
@@ -58,14 +58,11 @@ public class FlashSaleController {
             Integer flashSaleId = (Integer)jsonObject.get("flashSaleId");
             Integer userId = (Integer)jsonObject.get("userId");
             String key = "flashSale" + flashSaleId + userId;
-            Integer stock = (Integer)redisUtil.get("flashSale-" + flashSaleId);
-            if (stock>0){
+            if (redisUtil.lPop("flashSale-" + flashSaleId)!=null){
                 if(redisUtil.get(key)!=null){
                     return ResponseBo.error(500,"该活动只限参加一次");
                 }else{
                     flashSaleSender.send(data);
-                    //减少redis缓存中库存
-                    redisUtil.set("flashSale-"+flashSaleId,stock-1);
                     //redis设置该用户已抢购
                     redisUtil.set(key,"1");
                     return ResponseBo.success(200,"秒杀成功","");
