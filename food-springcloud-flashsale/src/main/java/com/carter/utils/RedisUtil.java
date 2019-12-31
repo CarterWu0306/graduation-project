@@ -152,6 +152,16 @@ public class RedisUtil {
     }
 
     /**
+     * 列表移除
+     *
+     * @param k
+     */
+    public Object lPop(String k) {
+        ListOperations<String, Object> list = redisTemplate.opsForList();
+        return list.rightPop(k);
+    }
+
+    /**
      * 列表获取
      *
      * @param k
