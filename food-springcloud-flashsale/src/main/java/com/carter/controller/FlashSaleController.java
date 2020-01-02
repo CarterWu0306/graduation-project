@@ -58,17 +58,17 @@ public class FlashSaleController {
             Integer flashSaleId = (Integer)jsonObject.get("flashSaleId");
             Integer userId = (Integer)jsonObject.get("userId");
             String key = "flashSale" + flashSaleId + userId;
-            if (redisUtil.lPop("flashSale-" + flashSaleId)!=null){
-                if(redisUtil.get(key)!=null){
-                    return ResponseBo.error(500,"该活动只限参加一次");
-                }else{
+            if(redisUtil.get(key)!=null){
+                return ResponseBo.error(500,"该活动只限参加一次");
+            }else{
+                if (redisUtil.lPop("flashSale-" + flashSaleId)!=null){
                     flashSaleSender.send(data);
                     //redis设置该用户已抢购
                     redisUtil.set(key,"1");
                     return ResponseBo.success(200,"秒杀成功","");
+                }else{
+                    return ResponseBo.error(500,"已被抢光");
                 }
-            }else{
-                return ResponseBo.error(500,"已被抢光");
             }
         } catch (Exception e) {
             return ResponseBo.error(500,"秒杀失败");
