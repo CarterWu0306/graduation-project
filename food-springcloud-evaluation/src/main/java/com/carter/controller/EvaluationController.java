@@ -85,7 +85,7 @@ public class EvaluationController {
         }
     }
 
-    @RequestMapping(value = "deleteEvaluation",method = RequestMethod.POST)
+    @RequestMapping(value = "deleteEvaluation",method = RequestMethod.GET)
     public ResponseBo deleteEvaluation(@RequestParam(value = "evaluationId") int evaluationId){
         try {
             int index = evaluationServiceImpl.deleteEvaluation(evaluationId);

@@ -35,11 +35,9 @@
     <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
     <result column="goods_stock" property="goodsStock" jdbcType="INTEGER" />
     <result column="goods_status" property="goodsStatus" jdbcType="CHAR" />
+    <result column="goods_desc" property="goodsDesc" jdbcType="VARCHAR" />
     <result column="sale_num" property="saleNum" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.carter.pojo.Goods" extends="BaseResultMap" >
-    <result column="goods_desc" property="goodsDesc" jdbcType="LONGVARCHAR" />
   </resultMap>
 
   <select id="selGoodsLabel" resultType="String">
@@ -107,27 +105,8 @@
   </sql>
   <sql id="Base_Column_List" >
     goods_id, goods_name, goods_label, goods_img, goods_price, goods_stock, goods_status,
-    sale_num, create_time
+    goods_desc, sale_num, create_time
   </sql>
-  <sql id="Blob_Column_List" >
-    goods_desc
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.carter.pojo.GoodsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from goods
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carter.pojo.GoodsExample" >
     select
     <if test="distinct" >
@@ -142,11 +121,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from goods
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </select>
@@ -163,12 +140,12 @@
   <insert id="insert" parameterType="com.carter.pojo.Goods" >
     insert into goods (goods_id, goods_name, goods_label,
       goods_img, goods_price, goods_stock,
-      goods_status, sale_num, create_time,
-      goods_desc)
+      goods_status, goods_desc, sale_num,
+      create_time)
     values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsLabel,jdbcType=VARCHAR},
       #{goodsImg,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsStock,jdbcType=INTEGER},
-      #{goodsStatus,jdbcType=CHAR}, #{saleNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-      #{goodsDesc,jdbcType=LONGVARCHAR})
+      #{goodsStatus,jdbcType=CHAR}, #{goodsDesc,jdbcType=VARCHAR}, #{saleNum,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carter.pojo.Goods" >
     insert into goods
@@ -194,14 +171,14 @@
       <if test="goodsStatus != null" >
         goods_status,
       </if>
+      <if test="goodsDesc != null" >
+        goods_desc,
+      </if>
       <if test="saleNum != null" >
         sale_num,
       </if>
       <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="goodsDesc != null" >
-        goods_desc,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -226,14 +203,14 @@
       <if test="goodsStatus != null" >
         #{goodsStatus,jdbcType=CHAR},
       </if>
+      <if test="goodsDesc != null" >
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
       <if test="saleNum != null" >
         #{saleNum,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="goodsDesc != null" >
-        #{goodsDesc,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -267,32 +244,16 @@
       <if test="record.goodsStatus != null" >
         goods_status = #{record.goodsStatus,jdbcType=CHAR},
       </if>
+      <if test="record.goodsDesc != null" >
+        goods_desc = #{record.goodsDesc,jdbcType=VARCHAR},
+      </if>
       <if test="record.saleNum != null" >
         sale_num = #{record.saleNum,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.goodsDesc != null" >
-        goods_desc = #{record.goodsDesc,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update goods
-    set goods_id = #{record.goodsId,jdbcType=INTEGER},
-    goods_name = #{record.goodsName,jdbcType=VARCHAR},
-    goods_label = #{record.goodsLabel,jdbcType=VARCHAR},
-    goods_img = #{record.goodsImg,jdbcType=VARCHAR},
-    goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
-    goods_stock = #{record.goodsStock,jdbcType=INTEGER},
-    goods_status = #{record.goodsStatus,jdbcType=CHAR},
-    sale_num = #{record.saleNum,jdbcType=INTEGER},
-    create_time = #{record.createTime,jdbcType=TIMESTAMP},
-    goods_desc = #{record.goodsDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -306,6 +267,7 @@
     goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
     goods_stock = #{record.goodsStock,jdbcType=INTEGER},
     goods_status = #{record.goodsStatus,jdbcType=CHAR},
+    goods_desc = #{record.goodsDesc,jdbcType=VARCHAR},
     sale_num = #{record.saleNum,jdbcType=INTEGER},
     create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -333,29 +295,16 @@
       <if test="goodsStatus != null" >
         goods_status = #{goodsStatus,jdbcType=CHAR},
       </if>
+      <if test="goodsDesc != null" >
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
       <if test="saleNum != null" >
         sale_num = #{saleNum,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="goodsDesc != null" >
-        goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where goods_id = #{goodsId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.carter.pojo.Goods" >
-    update goods
-    set goods_name = #{goodsName,jdbcType=VARCHAR},
-      goods_label = #{goodsLabel,jdbcType=VARCHAR},
-      goods_img = #{goodsImg,jdbcType=VARCHAR},
-      goods_price = #{goodsPrice,jdbcType=DECIMAL},
-      goods_stock = #{goodsStock,jdbcType=INTEGER},
-      goods_status = #{goodsStatus,jdbcType=CHAR},
-      sale_num = #{saleNum,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR}
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.carter.pojo.Goods" >
@@ -366,6 +315,7 @@
       goods_price = #{goodsPrice,jdbcType=DECIMAL},
       goods_stock = #{goodsStock,jdbcType=INTEGER},
       goods_status = #{goodsStatus,jdbcType=CHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
       sale_num = #{saleNum,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=INTEGER}

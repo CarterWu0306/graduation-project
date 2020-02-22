@@ -64,7 +64,6 @@ public class OrderController {
         theOrder.setOrderStatus("-1");
         theOrder.setPayStatus("0");
         theOrder.setOrderCreateTime(new Date());
-        theOrder.setOrderPayTime(new Date());
 
         return orderServiceImpl.addOrderByAdmin(theOrder,goodsList);
     }
@@ -144,6 +143,7 @@ public class OrderController {
         order.setOrderId(orderId);
         order.setOrderStatus("0");
         order.setPayStatus("1");
+        order.setOrderPayTime(new Date());
         return orderServiceImpl.changeOrderStatus(order);
     }
 
