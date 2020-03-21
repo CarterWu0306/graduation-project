@@ -75,7 +75,6 @@ public class FlashSaleServiceImpl implements FlashSaleService {
         Integer userId = (Integer)jsonObject.get("userId");
 
         //减少数据库秒杀活动库存
-        Integer stock = (Integer)redisUtil.get("flashSale-" + flashSaleId);
         FlashSale flashSale = flashSaleMapper.selectByPrimaryKey(flashSaleId);
         flashSale.setStock(flashSale.getStock()-1);
         int index = flashSaleMapper.updateByPrimaryKeySelective(flashSale);
